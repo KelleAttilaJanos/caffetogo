@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - caffetogo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="false"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <img src="~/logo.png" width="100%" height="100%">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Belépés</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Regisztráció</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="login-form" method="post" role="form" style="display: block;">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Jelszó">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Belépés">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="register-form"  method="post" role="form" style="display: none;">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" tabindex="3" class="form-control" placeholder="Jelszó">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="4" class="form-control" placeholder="Jelszó újra">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Regisztráció">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/login.js"></script>
+</body>
+</html>

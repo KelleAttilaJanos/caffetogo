@@ -1,0 +1,248 @@
+﻿@{
+    ViewData["Title"] = "Shop";
+}
+@model IEnumerable<caffetogo.Models.Buy>
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - caffetogo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/index.css">
+</head>
+<body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <header>
+    <div class="header">
+      <table class="headtable">
+        <tr>
+          <td id="hr1">
+            <img src="~/logo.png" id="logo" alt="logo">
+          </td>
+          <td id="hr2">
+            <p>Cafe to go</p>
+          </td>
+          <td id="hr3">
+            <a id="loginbutton" asp-controller="Home" asp-action="Login">Login</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </header>
+
+
+    <main>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
+          <div>
+            <p>hjhfgjhfjjhdfh</p>
+          </div>
+        
+            <div id="browse_app">
+              <a id="but" class="btn btn-large btn-info" asp-controller="Home" asp-action="Check">Fizetés</a>
+            </div>
+          </div>
+
+
+          <!--container right-->
+          <div style="padding: 15px;" class="col-lg-8">
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12">
+
+                  <div class="card-decks">
+
+                    <div class="card-group">
+
+
+                      <div class="row row-cols-1 row-cols-md-4">
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                          <div class="card">
+                            <img class="card-img-top" src="logo.png" alt="Card image cap">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">kacsa</p>
+                              <p class="card-text">
+                              <table id="card-table">
+                                <tr>
+                                  <td>
+                                    <button id="card-button">+</button>
+                                  </td>
+                                  <td>
+                                    <button id="card-button">-</button>
+                                  </td>
+                                </tr>
+                              </table>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+  <footer>
+  </footer>
+    <script src="~\lib\bootstrap\dist\js\bootstrap.min.js"></script>
+</body>
+</html>

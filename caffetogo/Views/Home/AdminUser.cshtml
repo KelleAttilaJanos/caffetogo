@@ -1,0 +1,66 @@
+﻿@model IEnumerable<caffetogo.Models.User>
+@{
+    ViewData["Title"] = "AdminUser";
+}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Admin.css">
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td class="ht"><img src="~/logo.png" width="200px" height="200px"></td>
+                <td class="ht"><a asp-controller="Home" asp-action="AdminBuy" class="headlink">Buy</a></td>
+                <td class="ht"><a asp-controller="Home" asp-action="AdminProduct" class="headlink">Product</a></td>
+                <td class="ht"><a asp-controller="Home" asp-action="Index" class="headlink">Index</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="main">
+        <table>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Password
+                </th>
+                <th>
+                    Activity
+                </th>
+                <th>
+                    <a asp-controller="Home" asp-action="CreateAdminUser">Create</a>
+                </th>
+            </tr>
+            @foreach (User item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        <input type="email" value=@item.Email>
+                    </td>
+                    <td>
+                        <input type="text" value=@item.Password>
+                    </td>
+                    <td>
+                        <input type="datetime" value=@item.Activity>
+                    </td>
+                    <td class="sendlink">
+                        <a href="~/DeleteUser?Id=@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

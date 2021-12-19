@@ -1,0 +1,59 @@
+﻿@model caffetogo.Models.User
+@{
+    ViewData["Title"] = "CreateAdminUser";
+}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Admin.css">
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td class="ht"><img src="~/logo.png" width="200px" height="200px"></td>
+                <td class="ht"><a asp-controller="Home" asp-action="AdminBuy" class="headlink">Buy</a></td>
+                <td class="ht"><a asp-controller="Home" asp-action="AdminProduct" class="headlink">Product</a></td>
+                <td class="ht"><a asp-controller="Home" asp-action="Index" class="headlink">Index</a></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <form method="post" asp-action="CreateAdminUser">
+            <table>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Activity
+                    </th>
+                    <th>
+                        <a asp-controller="Home" asp-action="AdminUser">Data</a>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input asp-for="Email" type="email"/>
+                    </td>
+                    <td>
+                        <input asp-for="Password" type="text"/>
+                    </td>
+                    <td>
+                        <input asp-for="Activity" type="datetime"/>
+                    </td>
+                    <td class="sendlink">
+                        <input type="submit" value="Create" >
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
