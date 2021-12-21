@@ -41,54 +41,136 @@ namespace caffetogo.Controllers
         }
         public IActionResult AdminBuy()
         {
-            IEnumerable<Buy> buy = _db.Buy;
-            return View(buy);
-        }
-        public IActionResult CreateAdminBuy()
-        {
-            return View();
+            return View(_db.Buy);
         }
         public IActionResult AdminProduct()
-        {
-            IEnumerable<Product> products = _db.Product;
-            return View(products);
-        }
-        public IActionResult CreateAdminProduct()
-        {
-            return View();
+        { 
+            return View(Servicies.ProductConverter(_db.Product));
         }
         public IActionResult AdminUser()
         {
-            IEnumerable<User> user = _db.Users;
-            return View(user);
+            return View(Servicies.UserConverter(_db.Users));
         }
-        public IActionResult CreateAdminUser()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAdminUser([Bind(include: "Email,Password")] UserView values)
         {
+            UserView obj= new UserView();
+            obj.Email = values.Email;
+            obj.Password = values.Password;
+            obj.Activity=DateTime.Now;
+            _db.Users.Add(Servicies.UserCreateConverter(obj));
+            _db.SaveChanges();
+            return RedirectToAction("AdminUser");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteAdminUser([Bind(include: "Id")] UserView values)
+        {
+            if (values.Id < 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Users.Find(values.Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Users.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("AdminUser");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateAdminUser([Bind(include: "Id,Email,Password,Activity")] UserView values)
+        {
+            if (ModelState.IsValid)
+            {
+                User newobject = Servicies.UserCreateConverter(values);
+                _db.Users.Update(newobject);
+                _db.SaveChanges();
+                return RedirectToAction("AdminUser");
+            }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAdminUser(User obj)
+        public IActionResult CreateAdminBuy([Bind(include: "UserId,Items")] Buy values)
         {
-            _db.Users.Add(obj);
+            _db.Buy.Add(values);
             _db.SaveChanges();
-            return RedirectToAction("CreateAdminUser");
+            return RedirectToAction("AdminBuy");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAdminBuy(Buy obj)
+        public IActionResult DeleteAdminBuy([Bind(include: "Id")] Buy values)
         {
-            _db.Buy.Add(obj);
+            if (values.Id < 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Buy.Find(values.Id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Buy.Remove(obj);
             _db.SaveChanges();
-            return RedirectToAction("CreateAdminBuy");
+            return RedirectToAction("BuyProduct");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAdminProduct(Product obj)
+        public IActionResult UpdateAdminBuy([Bind(include: "Id,UserId,Items")] Buy values)
         {
-            _db.Product.Add(obj);
+            if (ModelState.IsValid)
+            {
+                _db.Buy.Update(values);
+                _db.SaveChanges();
+                return RedirectToAction("AdminBuy");
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAdminProduct([Bind(include:"item, price, Pictures")] ProductView values)
+        {
+            ProductView obj = new ProductView();
+            obj.item = values.item;
+            obj.price = values.price;
+            obj.Pictures = values.Pictures;
+            _db.Product.Add(Servicies.ProductCreateConverter(obj));
             _db.SaveChanges();
-            return RedirectToAction("CreateAdminProduct");
+            return RedirectToAction("AdminProduct");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteAdminProduct([Bind(include: "Id")] ProductView values)
+        {
+            if(values.Id < 0 )
+            {
+                return NotFound();
+            }
+            var obj = _db.Product.Find(values.Id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            _db.Product.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("AdminProduct");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateAdminProduct([Bind(include: "Id,item,price,Pictures")] ProductView values)
+        {
+            if (ModelState.IsValid)
+            {
+            Product newobject = Servicies.ProductCreateConverter(values);
+            _db.Product.Update(newobject);
+            _db.SaveChanges();
+            return RedirectToAction("AdminProduct");
+            }
+            return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

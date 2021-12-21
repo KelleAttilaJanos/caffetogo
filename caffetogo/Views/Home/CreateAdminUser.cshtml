@@ -1,4 +1,4 @@
-﻿@model caffetogo.Models.User
+﻿@model caffetogo.Models.UserView
 @{
     ViewData["Title"] = "CreateAdminUser";
 }
@@ -32,9 +32,6 @@
                         Password
                     </th>
                     <th>
-                        Activity
-                    </th>
-                    <th>
                         <a asp-controller="Home" asp-action="AdminUser">Data</a>
                     </th>
                 </tr>
@@ -44,9 +41,6 @@
                     </td>
                     <td>
                         <input asp-for="Password" type="text"/>
-                    </td>
-                    <td>
-                        <input asp-for="Activity" type="datetime"/>
                     </td>
                     <td class="sendlink">
                         <input type="submit" value="Create" >

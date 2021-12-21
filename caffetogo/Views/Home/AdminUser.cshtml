@@ -1,4 +1,4 @@
-﻿@model IEnumerable<caffetogo.Models.User>
+﻿@model IEnumerable<caffetogo.Models.UserView>
 @{
     ViewData["Title"] = "AdminUser";
 }
@@ -21,46 +21,82 @@
             </tr>
         </table>
     </div>
-    <div class="main">
-        <table>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Password
-                </th>
-                <th>
-                    Activity
-                </th>
-                <th>
-                    <a asp-controller="Home" asp-action="CreateAdminUser">Create</a>
-                </th>
-            </tr>
-            @foreach (User item in Model)
-            {
+    @if (Model.Count() > 0)
+    {
+        <div class="main">
+            <table>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Activity
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (UserView item in Model)
+                {
+                    <form method="post">
+                    <tr>
+                        <td>
+                            <input name="Id" type="number" value=@item.Id>
+                        </td>
+                        <td>
+                            <input name="Email" type="email" value=@item.Email>
+                        </td>
+                        <td>
+                            <input name="Password" type="text" value=@item.Password>
+                        </td>
+                        <td>
+                            <input name="Activity" type="datetime-local" value=@item.Activity.ToString("yyyy-MM-ddTHH:mm")>
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Delete" asp-action="DeleteAdminUser">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Update" asp-action="UpdateAdminUser">
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </table>
+        </div>
+    }
+    <div>
+        <form method="post" asp-action="CreateAdminUser">
+            <table>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                    </th>
+                </tr>
                 <tr>
                     <td>
-                        @item.Id
+                        <input name="Email" type="email" />
                     </td>
                     <td>
-                        <input type="email" value=@item.Email>
-                    </td>
-                    <td>
-                        <input type="text" value=@item.Password>
-                    </td>
-                    <td>
-                        <input type="datetime" value=@item.Activity>
+                        <input name="Password" type="text" />
                     </td>
                     <td class="sendlink">
-                        <a href="~/DeleteUser?Id=@item.Id">Delete</a>
+                        <input type="submit" value="Create">
                     </td>
                 </tr>
-            }
-        </table>
+            </table>
+        </form>
     </div>
 </body>
 </html>

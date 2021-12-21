@@ -10,7 +10,7 @@ using caffetogo.Data;
 namespace caffetogo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211217093500_addItemsToDatabase")]
+    [Migration("20211221125020_addItemsToDatabase")]
     partial class addItemsToDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

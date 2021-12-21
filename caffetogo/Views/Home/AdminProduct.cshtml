@@ -1,4 +1,4 @@
-﻿@model IEnumerable<caffetogo.Models.Product>
+﻿@model IEnumerable<ProductView>
 @{
     ViewData["Title"] = "AdminProduct";
 }
@@ -21,46 +21,88 @@
             </tr>
         </table>
     </div>
-    <div class="main">
-        <table>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Password
-                </th>
-                <th>
-                    Activity
-                </th>
-                <th>
-                    <a asp-controller="Home" asp-action="CreateAdminProduct">Create</a>
-                </th>
-            </tr>
-            @foreach (Product item in Model)
-            {
+    @if (Model.Count() > 0)
+    {
+        <div class="main">
+            <table>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (ProductView item in Model)
+                {
+                    <form method="post">
+                    <tr>
+                        <td>
+                            <input name="Id" type="number" value=@item.Id>
+                        </td>
+                        <td>
+                            <input name="item" type="text" value=@item.item>
+                        </td>
+                        <td>
+                            <input name="price" type="number" value=@item.price>
+                        </td>
+                        <td>
+                            <input type="file" name="Pictures">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Delete" asp-action="DeleteAdminProduct">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Update" asp-action="UpdateAdminProduct">
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </table>
+        </div>
+    }
+    <div>
+        <form method="post" asp-action="CreateAdminProduct">
+            <table>
+                <tr>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Pictures
+                    </th>
+                    <th>
+                    </th>
+                </tr>
                 <tr>
                     <td>
-                        @item.Id
+                        <input name="item" type="text" />
                     </td>
                     <td>
-                        <input type="text" value=@item.item>
+                        <input name="price" type="number" />
                     </td>
                     <td>
-                        <input type="number" value=@item.price>
-                    </td>
-                    <td>
-                        <img src="@item.Pictures" width="200px" height="200px">
+                        <input name="Pictures" type="file" />
                     </td>
                     <td class="sendlink">
-                        <a href="~/DeleteUser?Id=@item.Id">Delete</a>
+                        <input type="submit" value="Create">
                     </td>
                 </tr>
-            }
-        </table>
+            </table>
+        </form>
     </div>
 </body>
 </html>
