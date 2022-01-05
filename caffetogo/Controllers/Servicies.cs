@@ -71,49 +71,12 @@ namespace caffetogo.Controllers
             }
             return user;
         }
-        public static IEnumerable<ProductView> ProductConverter(IEnumerable<Product> products)
-        {
-            List<ProductView> productview = new List<ProductView>();
-            foreach (var item in products)
-            {
-                ProductView productView = new ProductView();
-                productView.Id = item.Id;
-                productView.item = item.item;
-                productView.price = item.price;
-                try
-                {
-                    using (var ms = new MemoryStream(item.Pictures))
-                    {
-                        productView.Pictures = Image.FromStream(ms);
-                    }
-                }
-                catch
-                {
-                    productView.Pictures = null;
-                }
-                productview.Add(productView);
-            }
-            IEnumerable<ProductView> product = productview;
-            return product;
-        }
         public static Product ProductCreateConverter(ProductView productView)
         {
             Product product = new Product();
             product.Id = productView.Id;
             product.item = productView.item;
             product.price = productView.price;
-            if (productView.Pictures != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    productView.Pictures.Save(ms, productView.Pictures.RawFormat);
-                    product.Pictures = ms.ToArray();
-                }
-            }
-            else
-            {
-                product.Pictures = null;
-            }
             return product;
         }
     }

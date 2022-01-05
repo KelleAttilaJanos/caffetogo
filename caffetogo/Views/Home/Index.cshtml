@@ -1,248 +1,149 @@
 ﻿@{
     ViewData["Title"] = "Shop";
+    List<int> Cart = new List<int>();
 }
-@model IEnumerable<caffetogo.Models.Buy>
+@model caffetogo.Models.index
+
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - caffetogo</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/index.css">
+
+
 </head>
 <body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var list = []
+      
+        
+        function AddToCart(id) {
+            list.push(id);
+            console.log("anyad");
+            var namelist;
+            var pricelist;
+ 
+            @foreach(Product item in @Model.product)
+            {
+            
+            @:namelist=(@item.item);           
+            @:pricelist=(@item.price);
+            
+            }
+
+        }
+        function RemoveFromCart(id) {
+                    console.log(list.length);
+            for (let i = 0; i < list.length; i++) {
+                if (list[i] == id) {
+                    list.splice(i,1);
+                    break
+
+                }
+            }
+        }
+      
+    </script>
     <header>
-    <div class="header">
-      <table class="headtable">
-        <tr>
-          <td id="hr1">
-            <img src="~/logo.png" id="logo" alt="logo">
-          </td>
-          <td id="hr2">
-            <p>Cafe to go</p>
-          </td>
-          <td id="hr3">
-            <a id="loginbutton" asp-controller="Home" asp-action="Login">Login</a>
-          </td>
-        </tr>
-      </table>
-    </div>
+        <div class="header">
+            <table class="headtable">
+                <tr>
+                    <td id="hr1">
+                        <img src="~/logo.png" id="logo" alt="logo">
+                    </td>
+                    <td id="hr2">
+                        <p>Cafe to go</p>
+                    </td>
+                    <td id="hr3">
+                        <a id="loginbutton" asp-controller="Home" asp-action="Login">@Model.Email</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </header>
-
-
     <main>
 
-      <div class="container-fluid">
-        <div class="row">
-          <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
-          <div>
-            <p>hjhfgjhfjjhdfh</p>
-          </div>
-        
-            <div id="browse_app">
-              <a id="but" class="btn btn-large btn-info" asp-controller="Home" asp-action="Check">Fizetés</a>
-            </div>
-          </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
+                    <div id="asd">
+                        <!--container left-->
 
-
-          <!--container right-->
-          <div style="padding: 15px;" class="col-lg-8">
-
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-sm-12">
-
-                  <div class="card-decks">
-
-                    <div class="card-group">
-
-
-                      <div class="row row-cols-1 row-cols-md-4">
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col mb-4">
-                          <div class="card">
-                            <img class="card-img-top" src="logo.png" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">kacsa</p>
-                              <p class="card-text">
-                              <table id="card-table">
-                                <tr>
-                                  <td>
-                                    <button id="card-button">+</button>
-                                  </td>
-                                  <td>
-                                    <button id="card-button">-</button>
-                                  </td>
-                                </tr>
-                              </table>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                    <div id="browse_app">
+                        @{
+                            if (@Model.loggedin)
+                            {
+                                <input type="submit" id="but" class="btn btn-large btn-info" asp-controller="Home" asp-action="Check" value="Fizetés">
+                            }
+                        }
+                    </div>
                 </div>
-              </div>
+
+
+                <!--container right-->
+                <div style="padding: 15px;" class="col-lg-8">
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="card-decks">
+
+                                    <div class="card-group">
+
+
+                                        <div class="row row-cols-1 row-cols-md-4">
+                                            @foreach (Product item in Model.product)
+                                            {
+
+
+                                                <div class="col mb-4">
+                                                    <div class="card">
+
+                                                        <img class="card-img-top" width="100px" height="100px" src="~/@item.item-.png" alt="@item.item-.png">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">@item.item</h5>
+                                                            <p class="card-text">@item.price Ft</p>
+                                                            <p class="card-text">
+                                                                <table id="card-table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <button onclick="AddToCart(@item.Id)" class="btn1" id="card-button">+</button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button onclick="RemoveFromCart(@item.Id)" type="submit" id="card-button">-</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-  </main>
-  <footer>
-  </footer>
-    <script src="~\lib\bootstrap\dist\js\bootstrap.min.js"></script>
+    </main>
+    <footer>
+    </footer>
+
+
 </body>
 </html>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace caffetogo
 {
@@ -14,6 +15,8 @@ namespace caffetogo
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            Timer clock = new Timer(86400000);
+            clock.Start();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

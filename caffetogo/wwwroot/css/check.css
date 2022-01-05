@@ -1,63 +1,125 @@
-body{
+body {
     background-image: url("hatter.png");
 }
-.main{
+
+.main {
     background-color: bisque;
     border-radius: 3vh;
     border: 0.5vh solid rgb(117, 50, 2);
     width: 80%;
     padding: 2vh;
 }
-#collection{
+
+#collection {
     padding-top: 10vh;
 }
-img{
+
+img {
     width: 25vh;
     height: 25vh;
 }
-p{
+
+p {
     font-size: 2vh;
     color: rgb(117, 50, 2);
     font-weight: bold;
 }
-.left{
+
+.left {
     width: 10%;
 }
-.right{
+
+.right {
     width: 10%;
 }
-.btn{
-	background-color: rgb(117, 50, 2);
-	outline: none;
-	font-size: 1vh;
-	height: auto;
+
+.btn {
+    background-color: rgb(117, 50, 2);
+    outline: none;
+    font-size: 1vh;
+    height: auto;
     width: 100%;
-	font-weight: normal;
-	padding: 1vh;
-	text-transform: uppercase;
-	border-color: bisque;
+    font-weight: normal;
+    padding: 1vh;
+    text-transform: uppercase;
+    border-color: bisque;
     color: bisque;
     border-radius: 1vh;
 }
-.btn:hover,
-.btn:focus {
-	color: rgb(117, 50, 2);
-	background-color: bisque;
-	border-color: rgb(117, 50, 2);
-}
+
+    .btn:hover,
+    .btn:focus {
+        color: rgb(117, 50, 2);
+        background-color: bisque;
+        border-color: rgb(117, 50, 2);
+    }
+
 ::-webkit-scrollbar {
     width: 1.3vh;
-  }
-  ::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-track {
     background: bisque;
 }
+
 ::-webkit-scrollbar-thumb {
     background: rgb(117, 50, 2);
     border-radius: 0.9vh;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: bisque;
-  } 
-  ::-webkit-scrollbar-track:hover{
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: bisque;
+    }
+
+::-webkit-scrollbar-track:hover {
     background: rgb(117, 50, 2);
-  }
+}
+
+@media print {
+    body {
+        background-image: none;
+    }
+
+    .main {
+        background-color: none;
+        border: none;
+        width: 100%;
+        padding: 0vh;
+    }
+
+    #collection {
+        padding-top: 0vh;
+    }
+
+    p {
+        font-size: 2vh;
+        color: black;
+        font-weight: normal;
+    }
+
+    .left {
+        width: 0%;
+    }
+
+    .right {
+        width: 0%;
+    }
+
+    .btn {
+        background-color: transparent;
+        font-size: 0vh;
+        height: 0vh;
+        width: 0vh;
+        padding: 0vh;
+        border-color: transparent;
+        color: transparent;
+        border-radius: 0vh;
+    }
+
+    .btn:hover,
+    .btn:focus {
+        color: transparent;
+        background-color: transparent;
+        border-color: transparent;
+    }
+}
