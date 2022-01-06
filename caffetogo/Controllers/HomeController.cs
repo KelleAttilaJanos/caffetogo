@@ -34,7 +34,7 @@ namespace caffetogo.Controllers
 
             }
             return View(us);
-        
+
         }
         public IActionResult Privacy()
         {
@@ -44,9 +44,12 @@ namespace caffetogo.Controllers
         {
             return View();
         }
-        public IActionResult Check()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Check([Bind(include: "Cart,Id,Email")] Check ch)
         {
-            return View();
+            ch.Products=_db.Product.ToList();
+            return View(ch);
         }
         public IActionResult AdminBuy()
         {
@@ -110,6 +113,17 @@ namespace caffetogo.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult CreateBuy([Bind(include: "UserId,Items")] Buy values)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Buy.Add(values);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteAdminBuy([Bind(include: "Id")] Buy values)
         {
             var obj = _db.Buy.Find(values.Id);
@@ -139,12 +153,15 @@ namespace caffetogo.Controllers
                 obj.item = values.item;
                 obj.price = values.price;
                 obj.Pictures = values.Pictures;
-                string wwwR = webHost.WebRootPath;
-                string filename = values.item + "-.png";
-                string path = Path.Combine(wwwR, filename);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                if (values.Pictures != null)
                 {
-                    await values.Pictures.CopyToAsync(fileStream);
+                    string wwwR = webHost.WebRootPath;
+                    string filename = values.item + "-.png";
+                    string path = Path.Combine(wwwR, filename);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await values.Pictures.CopyToAsync(fileStream);
+                    }
                 }
                 Product product = Servicies.ProductCreateConverter(obj);
                 _db.Product.Add(product);

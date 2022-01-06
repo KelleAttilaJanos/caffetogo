@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Check";
 }
+@model caffetogo.Models.Check
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -16,26 +17,88 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        const list = [];
+        function WriteOut()
+        {
+        @{
+            foreach (string item in Model.Cart.Split(','))
+            {
+                <text>
+                            list.push(@Convert.ToInt32(item));
+                </text>
+            }
+        }
+            console.log(list[0]);
+            var listnum=[]
+            var listitem=[]
+            for(let i=0;i<list.length;i++)
+            {
+                var check=false;
+                if(listitem.length>0)
+                {
+                    for(let j=0;j<listitem.length;j++)
+                    {
+                        if(list[i]==listitem[j])
+                        {
+                            listnum[j]++;
+                            check=true;
+                        }
+                    }
+                }
+                if(check==false)
+                {
+                    listitem.push(list[i]);
+                    listnum.push(1);
+                }
+            }
+            document.getElementById("asd").innerHTML="";
+            const namelist=[];
+            const pricelist=[];
+            const idlist=[];
+        @foreach (Product item in @Model.Products)
+        {
+            <text>
+                                                     namelist.push('@(item.item)');
+                                                     pricelist.push('@(item.price)');
+                                                     idlist.push('@(item.Id)');
+            </text>
+        }
+            var sum=0;
+            if(list.length>0)
+            {
+                for(let i=0;i<listitem.length;i++)
+                {
+                    for(let j=0;j<idlist.length;j++)
+                    {
+                        if(listitem[i]==idlist[j])
+                        {
+                            sum+=listnum[i]*pricelist[j];
+                            document.getElementById("asd").innerHTML+="<p>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+                        }
+                    }
+                }
+            document.getElementById("asd").innerHTML+='<p>Összesen: '+sum+" Ft</p>";
+            }
+        }
+    </script>
     <div class="container-fluid" id="collection">
         <div class="row">
             <div class="left">
                 <button class="btn" onclick="window.print()">Nyomtatás</button>
-                <button class="btn" onclick="">Fizetés</button>
+                <form method="post" asp-action="CreateBuy">
+                    <input name="Items" type="hidden" value=@Model.Cart>
+                    <input name="UserId" type="hidden" value=@Model.Id>
+                    <input type="submit" class="btn" value="Fizetés">
+                </form>
             </div>
             <div class="main">
                 <img src="~/logo.png">
-                <p>
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra neque non massa laoreet, et semper elit placerat. Donec efficitur ex eget felis cursus, a vestibulum massa pharetra. Pellentesque in dictum augue. Phasellus in erat sed urna maximus vehicula. Proin vel pellentesque libero, eget suscipit dolor. Praesent tincidunt lorem eu eros sagittis, a feugiat lectus sollicitudin. Nulla faucibus lorem sit amet diam vehicula tincidunt. Proin nisi odio, ornare at dolor quis, pharetra porttitor arcu. In eget mauris diam. Nulla auctor at ligula a venenatis. Nullam porta, lacus ac accumsan tristique, nisi turpis tristique dui, eget consequat felis felis nec orci. Nam eget bibendum nunc. Pellentesque dapibus ornare urna, eu cursus dui egestas ac. In ultricies dictum quam sed posuere. Maecenas vitae mi ac nunc ullamcorper fermentum quis sit amet leo.
-
-                    Aliquam ligula orci, porttitor id dolor quis, pulvinar bibendum tellus. Phasellus dignissim posuere nibh, sit amet tempor enim. Etiam eu efficitur urna. Proin auctor luctus felis. Praesent semper ultrices nunc, id bibendum risus vestibulum vel. Nullam id ullamcorper mi, nec egestas urna. Etiam gravida dapibus erat, id egestas libero maximus in. Aenean placerat massa id tortor imperdiet accumsan at sit amet enim. Quisque non egestas felis, vel pellentesque lacus. Quisque ut ipsum nibh. Sed magna risus, laoreet eget auctor id, gravida vitae orci. Sed semper sapien quis efficitur hendrerit. Aenean interdum, neque eu viverra malesuada, massa nunc consectetur risus, in venenatis urna dui eget diam. Mauris facilisis urna ut justo fermentum, vel efficitur nibh venenatis. Morbi auctor sagittis ligula et rhoncus. Cras eget semper libero.
-
-                    Quisque luctus imperdiet dui, vitae posuere velit pretium nec. Proin nec nulla non massa accumsan scelerisque. Ut nec pretium diam, sit amet ullamcorper est. Vivamus in vulputate ipsum. Nullam eu metus ut elit elementum tempus. Praesent finibus urna vel est pretium, vel sodales arcu scelerisque. Duis facilisis, magna sed sagittis fermentum, est tortor gravida arcu, vel blandit velit eros in lectus. Curabitur bibendum mi nunc, ac tristique orci interdum in. Vestibulum non augue tellus. In quis nibh nibh. Donec euismod porttitor massa a pharetra. Cras et lorem consectetur, pharetra tortor ac, sollicitudin tellus. Pellentesque volutpat, leo sit amet volutpat aliquet, justo lorem viverra neque, nec condimentum nisi arcu accumsan augue. Fusce purus nisi, aliquet vitae nulla id, blandit fermentum turpis. Quisque tincidunt rhoncus nibh, consequat porta felis iaculis quis. Nulla tincidunt leo eu aliquet dignissim.
-
-                    Integer aliquet ullamcorper placerat. Sed nibh dui, eleifend nec interdum a, vulputate suscipit diam. Curabitur sodales tristique hendrerit. Suspendisse potenti. Donec quam nisl, condimentum ut erat in, interdum rutrum elit. Mauris scelerisque auctor semper. Praesent viverra eleifend sem, non pharetra justo mollis vehicula. Nunc a suscipit lacus, auctor iaculis metus. Praesent sit amet sodales ligula. Donec posuere ut felis ac imperdiet.
-
-                    Fusce consectetur urna iaculis tincidunt consectetur. Mauris nec mi convallis, tincidunt leo id, hendrerit leo. Aenean mollis ante sit amet nunc semper, vitae ornare dolor interdum. In lobortis dictum enim, in pharetra orci congue ut. Mauris nisl risus, dignissim vehicula posuere pharetra, lacinia commodo metus. Curabitur ultrices dictum malesuada. Mauris in lacus varius, finibus sem vel, facilisis dui. Nulla facilisi. Fusce posuere ligula vel metus condimentum sodales. Nam dignissim enim et hendrerit pellentesque.
-                </p>
+                <div id="asd">
+                    <script>
+                        WriteOut();
+                    </script>
+                </div>
             </div>
             <div class="right">
             </div>
