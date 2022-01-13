@@ -1,5 +1,3 @@
-using System;
-
 namespace caffetogo.Models
 {
     public class ErrorViewModel

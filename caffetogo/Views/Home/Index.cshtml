@@ -1,25 +1,52 @@
-﻿@{
+﻿@using System.Web
+@model caffetogo.Models.index
+@{
     ViewData["Title"] = "Shop";
 }
-@model caffetogo.Models.index
-
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/index.css">
+    <link rel="icon" src="~/favicon.ico">
+    <title>@ViewData["Title"]</title>
 
 </head>
-<body>
+<body class="movingBackground">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        @{
+            if (Model.message != null)
+            {
+                <text>
+                    $(window).on('load', function() {
+                    $('#alert').modal('show');
+                    });
+                </text>
+            }
+        }
+    </script>
+    <div class="modal" id="alert" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/logo.png" id="modalpicture">
+                </div>
+                <div class="modal-body">
+                    <p>@HttpUtility.UrlDecode(@Model.message)</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="thebutton" data-dismiss="modal">Bezárás</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <header>
         <div class="header">
             <table class="headtable">
@@ -31,7 +58,7 @@
                         <h1>Cafe to go</h1>
                     </td>
                     <td id="hr3">
-                        <a id="loginbutton" asp-controller="Home" asp-action="Login">@Model.Email</a>
+                        <a id="loginbutton" asp-controller="Home" asp-action="Login">@HttpUtility.UrlDecode(@Model.Email)</a>
                     </td>
                 </tr>
             </table>
@@ -41,22 +68,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
-                    <div id="asd">
+                    <div id="asd" class="card">
                         <!--container left-->
 
-                    </div>
-                    <div id="browse_app">
-                        @{
-                            if (@Model.loggedin)
-                            {
-                                <form method="post" asp-action="Check" enctype="multipart/form-data" >
-                                <input name="Cart" id="Cart" type="hidden">
-                                <input name="Id" id="Id" type="hidden">
-                                <input name="Email" type="hidden" value="@Model.Email">
-                                <input type="submit" id="but" class="btn btn-large btn-info" value="Fizetés">
-                                </form>                                                                
-                            }
-                        }
                     </div>
                 </div>
 
@@ -143,27 +157,44 @@
         @foreach (Product item in @Model.product)
         {
             <text>
-                             namelist.push('@(item.item)');
-                             pricelist.push('@(item.price)');
-                             idlist.push('@(item.Id)');
+               namelist.push('@(item.item)');
+               pricelist.push('@(item.price)');
+               idlist.push('@(item.Id)');
             </text>
         }
             var sum=0;
             if(list.length>0)
             {
-                for(let i=0;i<listitem.length;i++)
-                {
-                    for(let j=0;j<idlist.length;j++)
-                    {
-                        if(listitem[i]==idlist[j])
-                        {
-                            sum+=listnum[i]*pricelist[j];
-                            document.getElementById("asd").innerHTML+="<p>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
-                        }
-                    }
-                }
-            document.getElementById("asd").innerHTML+='<p>Összesen: '+sum+" Ft</p>";
+
+        for(let i=0;i<listitem.length;i++)
+        {
+        for(let j=0;j<idlist.length;j++)
+        {
+        if(listitem[i]==idlist[j])
+        {
+        if(sum==0)
+        {
+        sum+=listnum[i]*pricelist[j];
+        document.getElementById("asd").innerHTML+="<p></p><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+        }
+        else
+        {
+        sum+=listnum[i]*pricelist[j];
+        document.getElementById("asd").innerHTML+="<hr><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+        }
+        }
+        }
+        }
+        document.getElementById("asd").innerHTML+='<hr id="boldline"><p id="gensum">Összesen: '+sum+" Ft</p>";
+        }
+        @{
+            if (@Model.loggedin)
+            {
+                <text>
+                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
+                </text>
             }
+        }
         }
         function AddToCart(id)
         {
@@ -176,8 +207,8 @@
                 text+=",";
                 text+=list[i];
             }
-            document.getElementById("Cart").value=text;                     
-            document.getElementById("Id").value=@Model.id;                     
+            document.getElementById("Cart").value=text;
+            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
         }
         function RemoveFromCart(id)
         {
@@ -200,8 +231,8 @@
                     text+=list[i];
                 }
             }
-            document.getElementById("Cart").value=text;                   
-            document.getElementById("Id").value=@Model.id;                   
+            document.getElementById("Cart").value=text;
+            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
         }
     </script>
 </body>

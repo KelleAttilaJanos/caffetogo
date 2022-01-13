@@ -9,6 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/Admin.css">
+    <link rel="icon" src="~/favicon.ico">
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <div>
@@ -20,6 +22,33 @@
                 <td class="ht"><a asp-controller="Home" asp-action="Index" class="headlink">Index</a></td>
             </tr>
         </table>
+    </div>
+    <div>
+        <form method="post" asp-action="CreateAdminUser">
+            <table>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="Email" type="email" />
+                    </td>
+                    <td>
+                        <input name="Password" type="text" />
+                    </td>
+                    <td class="sendlink">
+                        <input type="submit" value="Create">
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
     @if (Model.Count() > 0)
     {
@@ -71,32 +100,5 @@
             </table>
         </div>
     }
-    <div>
-        <form method="post" asp-action="CreateAdminUser">
-            <table>
-                <tr>
-                    <th>
-                        Email
-                    </th>
-                    <th>
-                        Password
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <input name="Email" type="email" />
-                    </td>
-                    <td>
-                        <input name="Password" type="text" />
-                    </td>
-                    <td class="sendlink">
-                        <input type="submit" value="Create">
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
 </body>
 </html>

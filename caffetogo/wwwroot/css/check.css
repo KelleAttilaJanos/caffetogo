@@ -1,5 +1,37 @@
+#thebutton {
+    text-align: center;
+    font-size: 20px;
+    height: 40px;
+    width: 100%;
+    border-style: none;
+    border-radius: 10px;
+    color: bisque;
+    background-color: rgb(117, 50, 2);
+}
+
+#modalpicture {
+    width: 500px;
+    height: 500px;
+    place-self: center;
+}
+@import url('https://fonts.googleapis.com/css?family=Exo:900');
+
 body {
+    position: relative;
     background-image: url("hatter.png");
+    background-size: 243px 215px;
+    animation: movimiento 3.5s linear infinite;
+}
+
+
+@keyframes movimiento {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 243px 215px;
+    }
 }
 
 .main {

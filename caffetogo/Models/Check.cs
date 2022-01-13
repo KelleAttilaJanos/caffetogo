@@ -1,9 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 namespace caffetogo.Models
 {
     public class Check
@@ -12,5 +7,6 @@ namespace caffetogo.Models
         public string Cart { get; set; }
         public List<Product> Products { get; set; }
         public string Email { get; set; }
+        public string message { get; set; }
     }
 }

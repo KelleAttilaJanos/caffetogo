@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Security.Cryptography;
 
 namespace caffetogo.Models
 {

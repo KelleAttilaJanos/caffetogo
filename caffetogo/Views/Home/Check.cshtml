@@ -7,16 +7,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - caffetogo</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="~/css/check.css">
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="icon" src="~/favicon.ico">
 </head>
-<body>
+<body class='movingBackground'>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        @{
+            if (Model.message != null)
+            {
+                <text>
+                                        $(window).on('load', function() {
+                                            $('#alert').modal('show');
+                                        });
+                </text>
+
+            }
+        }
+    </script>
+    <div class="modal" id="alert" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/logo.png" id="modalpicture">
+                </div>
+                <div class="modal-body">
+                    <p>@Model.message</p>
+                </div>
+                <div class="modal-footer">            
+                    <button id="thebutton"data-dismiss="modal">Bezárás</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         const list = [];
         function WriteOut()
@@ -86,7 +115,7 @@
         <div class="row">
             <div class="left">
                 <button class="btn" onclick="window.print()">Nyomtatás</button>
-                <form method="post" asp-action="CreateBuy">
+                <form method="post" asp-antiforgery="true" asp-action="CreateBuy">
                     <input name="Items" type="hidden" value=@Model.Cart>
                     <input name="UserId" type="hidden" value=@Model.Id>
                     <input type="submit" class="btn" value="Fizetés">

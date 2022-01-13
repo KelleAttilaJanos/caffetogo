@@ -1,16 +1,17 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Security.Cryptography;
 
 namespace caffetogo.Models
 {
     public class UserRegister
     {
+        [Required, EmailAddress]
         public string Email { get; set; }
+        [Required, PasswordPropertyText]
         public string Password { get; set; }
-        public string confirmpassword {get;set;}
+        [Required, PasswordPropertyText]
+        public string confirmpassword { get; set; }
+
 
 
 
