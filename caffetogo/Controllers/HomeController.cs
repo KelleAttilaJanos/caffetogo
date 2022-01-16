@@ -52,17 +52,20 @@ namespace caffetogo.Controllers
             ch.Products = _db.Product.ToList();
             return View(ch);
         }
-        public IActionResult AdminBuy()
+        public IActionResult Admin(Admin admin)
         {
-            return View(_db.Buy);
-        }
-        public IActionResult AdminProduct()
-        {
-            return View(_db.Product);
-        }
-        public IActionResult AdminUser()
-        {
-            return View(Servicies.UserConverter(_db.Users));
+            if (admin.Email == admin.AdminEmail && admin.Password == admin.AdminPassword)
+            {
+                AdminView adminView = new AdminView();
+                adminView.buys = _db.Buy;
+                adminView.products = _db.Product;
+                adminView.users = Servicies.UserConverter(_db.Users);
+                return View(adminView);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -77,7 +80,10 @@ namespace caffetogo.Controllers
                 _db.Users.Add(Servicies.UserCreateConverter(obj));
                 _db.SaveChanges();
             }
-            return RedirectToAction("AdminUser");
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,7 +92,10 @@ namespace caffetogo.Controllers
             var obj = _db.Users.Find(values.Id);
             _db.Users.Remove(obj);
             _db.SaveChanges();
-            return RedirectToAction("AdminUser");
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,7 +106,10 @@ namespace caffetogo.Controllers
                 User newobject = Servicies.UserCreateConverter(values);
                 _db.Users.Update(newobject);
                 _db.SaveChanges();
-                return RedirectToAction("AdminUser");
+                Admin admin = new Admin();
+                admin.Email = admin.AdminEmail;
+                admin.Password = admin.AdminPassword;
+                return RedirectToAction("Admin", admin);
             }
             return View();
         }
@@ -110,7 +122,10 @@ namespace caffetogo.Controllers
                 _db.Buy.Add(values);
                 _db.SaveChanges();
             }
-            return RedirectToAction("AdminBuy");
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -202,7 +217,10 @@ namespace caffetogo.Controllers
             var obj = _db.Buy.Find(values.Id);
             _db.Buy.Remove(obj);
             _db.SaveChanges();
-            return RedirectToAction("AdminBuy");
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -212,7 +230,10 @@ namespace caffetogo.Controllers
             {
                 _db.Buy.Update(values);
                 _db.SaveChanges();
-                return RedirectToAction("AdminBuy");
+                Admin admin = new Admin();
+                admin.Email = admin.AdminEmail;
+                admin.Password = admin.AdminPassword;
+                return RedirectToAction("Admin", admin);
             }
             return View();
         }
@@ -240,7 +261,10 @@ namespace caffetogo.Controllers
                 _db.Product.Add(product);
                 _db.SaveChanges();
             }
-            return RedirectToAction("AdminProduct");
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -257,9 +281,21 @@ namespace caffetogo.Controllers
             }
             _db.Product.Remove(obj);
             _db.SaveChanges();
-            FileInfo file = new FileInfo(Path.Combine(webHost.WebRootPath, obj.item + "-.png"));
-            file.Delete();
-            return RedirectToAction("AdminProduct");
+            try
+            {
+                FileInfo file = new FileInfo(Path.Combine(webHost.WebRootPath, obj.item + "-.png"));
+                file.Delete();
+            }
+            catch
+            {
+                index ind = new index();
+                ind.message = "A kép törlése sikertelen volt";
+                return RedirectToAction("Index", ind);
+            }
+            Admin admin = new Admin();
+            admin.Email = admin.AdminEmail;
+            admin.Password = admin.AdminPassword;
+            return RedirectToAction("Admin", admin);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -272,12 +308,24 @@ namespace caffetogo.Controllers
                 _db.Product.Remove(obj);
                 _db.Product.Add(newobject);
                 _db.SaveChanges();
-                if (obj.item != values.item)
+                try
                 {
-                    FileInfo file = new FileInfo(Path.Combine(webHost.WebRootPath, obj.item + "-.png"));
-                    file.MoveTo(Path.Combine(webHost.WebRootPath, values.item + "-.png"));
+                    if (obj.item != values.item)
+                    {
+                        FileInfo file = new FileInfo(Path.Combine(webHost.WebRootPath, obj.item + "-.png"));
+                        file.MoveTo(Path.Combine(webHost.WebRootPath, values.item + "-.png"));
+                    }
                 }
-                return RedirectToAction("AdminProduct");
+                catch
+                {
+                    index ind = new index();
+                    ind.message = "A kép átnevezése sikertelen volt";
+                    return RedirectToAction("Index", ind);
+                }
+                Admin admin = new Admin();
+                admin.Email = admin.AdminEmail;
+                admin.Password = admin.AdminPassword;
+                return RedirectToAction("Admin", admin);
             }
             return View();
         }
@@ -353,7 +401,9 @@ namespace caffetogo.Controllers
             if (values.Email == obj.AdminEmail && values.Password == obj.AdminPassword)
             {
                 ind.loggedin = false;
-                return RedirectToAction("AdminUser");
+                obj.Email = values.Email;
+                obj.Password = values.Password;
+                return RedirectToAction("Admin", obj);
             }
             else if (values.Email != null && values.Password != null)
             {

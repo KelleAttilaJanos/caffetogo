@@ -1,0 +1,283 @@
+﻿@model AdminView
+@{
+    ViewData["Title"] = "Admin";
+}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Admin.css">
+    <link rel="icon" src="~/favicon.ico">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td class="ht"><img src="~/logo.png" width="200px" height="200px"></td>
+                <td class="ht"><a href="#Adminproducts" class="headlink">Product</a></td>
+                <td class="ht"><a href="#AdminBuy" class="headlink">Buy</a></td>
+                <td class="ht"><a asp-controller="Home" asp-action="Index" class="headlink">Index</a></td>
+            </tr>
+        </table>
+    </div>
+    <table>
+        <tr>
+            <td class="ht"><h1 id="AdminUser">Admin User</h1></td>
+            <td class="ht"><a href="#Adminproducts" class="headlink">Product</a></td>
+            <td class="ht"><a href="#AdminBuy" class="headlink">Buy</a></td>
+        </tr>
+    </table>
+    <div>
+        <form method="post" asp-action="CreateAdminUser">
+            <table>
+                <tr>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="Email" type="email" />
+                    </td>
+                    <td>
+                        <input name="Password" type="text" />
+                    </td>
+                    <td class="sendlink">
+                        <input type="submit" value="Create">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    @if (Model.users.Count() > 0)
+    {
+        <div class="main">
+            <table>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Activity
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (UserView item in Model.users)
+                {
+                    <form method="post">
+                    <tr>
+                        <td>
+                            <input name="Id" type="number" value=@item.Id>
+                        </td>
+                        <td>
+                            <input name="Email" type="email" value=@item.Email>
+                        </td>
+                        <td>
+                            <input name="Password" type="text" value=@item.Password>
+                        </td>
+                        <td>
+                            <input name="Activity" type="datetime-local" value=@item.Activity.ToString("yyyy-MM-ddTHH:mm")>
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Delete" asp-action="DeleteAdminUser">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Update" asp-action="UpdateAdminUser">
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </table>
+        </div>
+    }
+    <table>
+        <tr>
+            <td class="ht"><h1 id="Adminproducts">Admin Products</h1></td>
+            <td class="ht"><a href="#AdminUser" class="headlink">User</a></td>
+            <td class="ht"><a href="#AdminBuy" class="headlink">Buy</a></td>
+        </tr>
+    </table>
+
+    <div>
+        <form method="post" asp-action="CreateAdminProduct" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Pictures
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="item" type="text" />
+                    </td>
+                    <td>
+                        <input name="price" type="number" />
+                    </td>
+                    <td>
+                        <input name="Pictures" type="file" accept="image/png" />
+                    </td>
+                    <td class="sendlink">
+                        <input type="submit" value="Create">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    @if (Model.products.Count() > 0)
+    {
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="main">
+            <table>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (Product item in Model.products)
+                {
+                    <form method="post">
+                    <tr>
+                        <td>
+                            <input name="Id" type="number" value=@item.Id>
+                        </td>
+                        <td>
+                            <input name="item" type="text" value=@item.item>
+                        </td>
+                        <td>
+                            <input name="price" type="number" value=@item.price>
+                        </td>
+                        <td>
+                            <img width=200px height=200 alt="@item.item-.png" src="~/@item.item-.png">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Delete" asp-action="DeleteAdminProduct">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Update" asp-action="UpdateAdminProduct">
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </table>
+        </div>
+    }
+    <table>
+        <tr>
+            <td class="ht"><h1 id="AdminBuy">Admin Buy</h1></td>
+            <td class="ht"><a href="#AdminUser" class="headlink">User</a></td>
+            <td class="ht"><a href="#Adminproducts" class="headlink">Product</a></td>
+        </tr>
+    </table>
+    <div>
+        <form method="post" asp-action="CreateAdminBuy">
+            <table>
+                <tr>
+                    <th>
+                        UserID
+                    </th>
+                    <th>
+                        Items
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input name="UserId" type="text" />
+                    </td>
+                    <td>
+                        <input name="Items" type="text" />
+                    </td>
+                    <td class="sendlink">
+                        <input type="submit" value="Create">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    @if (Model.buys.Count() > 0)
+    {
+        <div class="main">
+            <table>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        UserID
+                    </th>
+                    <th>
+                        Items
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+                @foreach (Buy item in Model.buys)
+                {
+                    <form method="post">
+                    <tr>
+                        <td>
+                            <input name="Id" type="number" value=@item.Id>
+                        </td>
+                        <td>
+                            <input name="UserId" type="text" value=@item.UserId>
+                        </td>
+                        <td>
+                            <input name="Items" type="text" value=@item.Items>
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Delete" asp-action="DeleteAdminBuy">
+                        </td>
+                        <td class="sendlink">
+                            <input type="submit" value="Update" asp-action="UpdateAdminBuy">
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </table>
+        </div>
+    }
+</body>
+</html>
