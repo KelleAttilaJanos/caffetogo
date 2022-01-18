@@ -10,7 +10,6 @@ namespace caffetogo.Models
         [Required]
         public string item { get; set; }
         [Required]
-        [Display(Name = "Price")]
         [Range(1, int.MaxValue, ErrorMessage = "Nagyobbnak kell lennie mint 0")]
         public int price { get; set; }
         public IFormFile Pictures { get; set; }

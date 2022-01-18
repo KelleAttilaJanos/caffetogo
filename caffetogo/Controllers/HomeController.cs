@@ -25,8 +25,6 @@ namespace caffetogo.Controllers
             _logger = logger;
             _db = db;
             this.webHost = webhost;
-            User us = new User();
-
         }
         public IActionResult Index(index us)
         {
@@ -239,7 +237,7 @@ namespace caffetogo.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAdminProduct([Bind(include: "item, price, Pictures")] ProductView values)
+        public async Task<IActionResult> CreateAdminProduct([Bind(include: "item,price,Pictures")] ProductView values)
         {
             if (ModelState.IsValid)
             {
@@ -252,13 +250,12 @@ namespace caffetogo.Controllers
                     string wwwR = webHost.WebRootPath;
                     string filename = values.item + "-.png";
                     string path = Path.Combine(wwwR, filename);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    using (FileStream fileStream = new FileStream(path, FileMode.Create))
                     {
                         await values.Pictures.CopyToAsync(fileStream);
                     }
-                }
-                Product product = Servicies.ProductCreateConverter(obj);
-                _db.Product.Add(product);
+                }                
+                _db.Product.Add(Servicies.ProductCreateConverter(obj));
                 _db.SaveChanges();
             }
             Admin admin = new Admin();

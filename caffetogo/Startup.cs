@@ -19,7 +19,7 @@ namespace caffetogo
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        //This method gets called by the runtime.Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -34,14 +34,12 @@ namespace caffetogo
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            env.WebRootPath = AppDomain.CurrentDomain.BaseDirectory;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
             }
             else
             {
@@ -53,14 +51,8 @@ namespace caffetogo
             {
                 tenor.Response.Headers.Add("Header-Key", "Header-Value");
                 tenor.Response.Headers.Add("X-Frame-Options", "DENY");
-                tenor.Response.Headers.Add("X-Xss-Protection", "1; mode=stop");
+                tenor.Response.Headers.Add("X-Xss-Protection", "1");
                 tenor.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
-                await next();
-            });
-            app.Use(async (ctx, next) =>
-            {
-                ctx.Response.Headers.Add("Content-Security-Policy",
-                "lapse-src `self`; report-uri /idgreport");
                 await next();
             });
             app.UseHttpsRedirection();

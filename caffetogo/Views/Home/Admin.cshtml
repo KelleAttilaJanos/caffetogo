@@ -139,7 +139,7 @@
                         <input name="price" type="number" />
                     </td>
                     <td>
-                        <input name="Pictures" type="file" accept="image/png" />
+                        <input name="Pictures" type="file"  accept="image/png"/>
                     </td>
                     <td class="sendlink">
                         <input type="submit" value="Create">
@@ -150,7 +150,6 @@
     </div>
     @if (Model.products.Count() > 0)
     {
-        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="main">
             <table>
                 <tr>
