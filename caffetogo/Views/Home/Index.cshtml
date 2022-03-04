@@ -25,9 +25,9 @@
             if (Model.message != null)
             {
                 <text>
-                    $(window).on('load', function() {
-                    $('#alert').modal('show');
-                    });
+                            $(window).on('load', function() {
+                            $('#alert').modal('show');
+                            });
                 </text>
             }
         }
@@ -58,7 +58,7 @@
                         <h1>Cafe to go</h1>
                     </td>
                     <td id="hr3">
-                        <a id="loginbutton" asp-controller="Home" asp-action="Login">@HttpUtility.UrlDecode(@Model.Email)</a>
+                        <a id="but" asp-controller="Home" asp-action="Login">@HttpUtility.UrlDecode(@Model.Email)</a>
                     </td>
                 </tr>
             </table>
@@ -123,117 +123,130 @@
             </div>
         </div>
     </main>
-
     <script type="text/javascript">
-        var list = []
-        function WriteOut()
-        {
-            var listnum=[]
-            var listitem=[]
-            for(let i=0;i<list.length;i++)
-            {
-                var check=false;
-                if(listitem.length>0)
+                var list = []
+                function WriteOut()
                 {
-                    for(let j=0;j<listitem.length;j++)
+                    var listnum=[]
+                    var listitem=[]
+                    for(let i=0;i<list.length;i++)
                     {
-                        if(list[i]==listitem[j])
+                        var check=false;
+                        if(listitem.length>0)
                         {
-                            listnum[j]++;
-                            check=true;
+                            for(let j=0;j<listitem.length;j++)
+                            {
+                                if(list[i]==listitem[j])
+                                {
+                                    listnum[j]++;
+                                    check=true;
+                                }
+                            }
+                        }
+                        if(check==false)
+                        {
+                            listitem.push(list[i]);
+                            listnum.push(1);
                         }
                     }
-                }
-                if(check==false)
-                {
-                    listitem.push(list[i]);
-                    listnum.push(1);
-                }
-            }
-            document.getElementById("asd").innerHTML="";
-            const namelist=[];
-            const pricelist=[];
-            const idlist=[];
+                    document.getElementById("asd").innerHTML="";
+                    const namelist=[];
+                    const pricelist=[];
+                    const idlist=[];
         @foreach (Product item in @Model.product)
         {
             <text>
-               namelist.push('@(item.item)');
-               pricelist.push('@(item.price)');
-               idlist.push('@(item.Id)');
+                           namelist.push('@(item.item)');
+                           pricelist.push('@(item.price)');
+                           idlist.push('@(item.Id)');
             </text>
         }
-            var sum=0;
-            if(list.length>0)
-            {
+                    var sum=0;
+                    if(list.length>0)
+                    {
 
-        for(let i=0;i<listitem.length;i++)
-        {
-        for(let j=0;j<idlist.length;j++)
-        {
-        if(listitem[i]==idlist[j])
-        {
-        if(sum==0)
-        {
-        sum+=listnum[i]*pricelist[j];
-        document.getElementById("asd").innerHTML+="<p></p><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
-        }
-        else
-        {
-        sum+=listnum[i]*pricelist[j];
-        document.getElementById("asd").innerHTML+="<hr><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
-        }
-        }
-        }
-        }
-        document.getElementById("asd").innerHTML+='<hr id="boldline"><p id="gensum">Összesen: '+sum+" Ft</p>";
-        }
+                for(let i=0;i<listitem.length;i++)
+                {
+                for(let j=0;j<idlist.length;j++)
+                {
+                if(listitem[i]==idlist[j])
+                {
+                if(sum==0)
+                {
+                sum+=listnum[i]*pricelist[j];
+                document.getElementById("asd").innerHTML+="<p></p><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+                }
+                else
+                {
+                sum+=listnum[i]*pricelist[j];
+                document.getElementById("asd").innerHTML+="<hr><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+                }
+                }
+                }
+                }
+                document.getElementById("asd").innerHTML+='<hr id="boldline"><p id="gensum">Összesen: '+sum+" Ft</p>";
+                }
         @{
             if (@Model.loggedin)
             {
                 <text>
-                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
+                                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
                 </text>
             }
         }
-        }
-        function AddToCart(id)
-        {
-            var text="";
-            list.push(Number(id));
-            WriteOut();
-            text+=list[0];
-            for(let i=1;i<list.length;i++)
-            {
-                text+=",";
-                text+=list[i];
-            }
-            document.getElementById("Cart").value=text;
-            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
-        }
-        function RemoveFromCart(id)
-        {
-            var igen=false;
-            for (let i = 0; i < list.length; i++)
-            {
-                if (list[i] == Number(id) && igen==false) {
-                    list.splice(i,1)
-                    igen=true;
                 }
-            }
-            WriteOut();
-            var text="";
-            if(list.length>0)
+                function AddToCart(id)
+                {
+                    var text="";
+                    list.push(Number(id));
+                    WriteOut();
+                    text+=list[0];
+                    for(let i=1;i<list.length;i++)
+                    {
+                        text+=",";
+                        text+=list[i];
+                    }
+        @{
+            if (@Model.loggedin)
             {
+                <text>
+                            document.getElementById("Cart").value=text;
+                            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                </text>
+            }
+        }
+                }
+                function RemoveFromCart(id)
+                {
+                var igen=false;
+                for (let i = 0; i < list.length; i++)
+                {
+                if (list[i] == Number(id) && igen==false) {
+                list.splice(i,1)
+                igen=true;
+                }
+                }
+                WriteOut();
+                var text="";
+                if(list.length>0)
+                {
                 text+=list[0];
                 for(let i=1;i<list.length;i++)
                 {
-                    text+=",";
-                    text+=list[i];
+                text+=",";
+                text+=list[i];
                 }
+                }
+        @{
+            if (@Model.loggedin)
+            {
+                <text>
+                                    document.getElementById("Cart").value=text;
+                                    document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                </text>
             }
-            document.getElementById("Cart").value=text;
-            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
         }
+                }
     </script>
 </body>
 </html>

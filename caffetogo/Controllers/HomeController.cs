@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace caffetogo.Controllers
 {
     public class HomeController : Controller
@@ -42,6 +43,10 @@ namespace caffetogo.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+        public IActionResult Confirm(UserRegister obj)
+        {
+            return View(obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -155,9 +160,13 @@ namespace caffetogo.Controllers
                         itemlist.Add(list[i]);
                         itemcount.Add(1);
                     }
-
                 }
-                var MailBody = "";
+                string MailBody = "";
+                string email = "";
+                using (StreamReader reader = new StreamReader(webHost.WebRootPath + @"\purchase.html"))
+                {
+                    email = reader.ReadToEnd();
+                }
                 int summa = 0;
                 for (int i = 0; i < itemlist.Count(); i++)
                 {
@@ -170,27 +179,22 @@ namespace caffetogo.Controllers
                         }
                     }
                 }
-                MailBody += "<p>Összesen " + summa + " ft</p>";
-                // read the content of template and pass it to the Email constructor
-
-
-                var usmal = _db.Users.Where(x => x.Id == values.UserId).Select(x => x.Email).SingleOrDefault();
-                string to = usmal; //To address    
-                string from = "caffetogotest@gmail.com"; //From address    
+                MailBody += "<hr>";
+                MailBody += "<p>Összesen " + summa + " Ft</p>";
+                email = email.Replace("{bod}", MailBody);
+                string to = _db.Users.Where(x => x.Id == values.UserId).Select(x => x.Email).SingleOrDefault();
+                string from = "caffetogotest@gmail.com";
                 MailMessage message = new MailMessage(from, to);
-                string mailbody = MailBody;
                 message.Subject = "Sikeres Rendelés";
-                message.Body = mailbody;
+                message.Body = email;
                 message.BodyEncoding = Encoding.UTF8;
                 message.IsBodyHtml = true;
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
                 System.Net.NetworkCredential basicCredential1 = new
                 System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
                 client.Credentials = basicCredential1;
-
-
                 try
                 {
                     client.Send(message);
@@ -254,7 +258,7 @@ namespace caffetogo.Controllers
                     {
                         await values.Pictures.CopyToAsync(fileStream);
                     }
-                }                
+                }
                 _db.Product.Add(Servicies.ProductCreateConverter(obj));
                 _db.SaveChanges();
             }
@@ -347,12 +351,19 @@ namespace caffetogo.Controllers
             {
                 if (values.Password == values.confirmpassword)
                 {
+                    string MailBody = "";
+                    string email = "";
+                    using (StreamReader reader = new StreamReader(webHost.WebRootPath + @"\confirm.html"))
+                    {
+                        email = reader.ReadToEnd();
+                    }
                     string to = values.Email; //To address    
                     string from = "caffetogotest@gmail.com"; //From address    
                     MailMessage message = new MailMessage(from, to);
-                    string mailbody = "Gratulálok sikeresen regisztráltál a CaffeToGo alkalmazásunkba" + "Az Ön Email címe:" + values.Email + "Az Ön jelszava:" + values.Password;
-                    message.Subject = "Sikeres Regisztáció";
-                    message.Body = mailbody;
+                    MailBody = "<a href = 'https://localhost:44354/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
+                    email = email.Replace("{link}", MailBody);
+                    message.Subject = "Regisztráció hitelesítése";
+                    message.Body = email;
                     message.BodyEncoding = Encoding.UTF8;
                     message.IsBodyHtml = true;
                     SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
@@ -364,11 +375,6 @@ namespace caffetogo.Controllers
                     try
                     {
                         client.Send(message);
-                        obj.Email = values.Email;
-                        obj.Password = values.Password;
-                        obj.Activity = DateTime.Now;
-                        _db.Users.Add(Servicies.UserCreateConverter(obj));
-                        _db.SaveChanges();
                     }
                     catch
                     {
@@ -377,7 +383,7 @@ namespace caffetogo.Controllers
                         return RedirectToAction("index", inde);
                     }
                     index inda = new index();
-                    inda.message = HttpUtility.UrlEncode("Sikeres regisztráció,Emailben küldjük az adatokat");
+                    inda.message = HttpUtility.UrlEncode("Kérjük hitelesítse regisztrációját");
                     return RedirectToAction("index", inda);
                 }
                 else
@@ -387,6 +393,34 @@ namespace caffetogo.Controllers
                     return RedirectToAction("index", indb);
                 }
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateUser2([Bind(include: "Email,Password")] UserRegister values)
+        {
+            UserView obj = new UserView();
+            index inda = new index();
+            try
+            {
+                if (values.Email == null || values.Password == null)
+                {
+                    inda.message = HttpUtility.UrlEncode("Sikertelen hitelesítés");
+                }
+                else
+                {
+                    obj.Email = values.Email;
+                    obj.Password = values.Password;
+                    obj.Activity = DateTime.Now;
+                    _db.Users.Add(Servicies.UserCreateConverter(obj));
+                    _db.SaveChanges();
+                    inda.message = HttpUtility.UrlEncode("Sikeres hitelesítés");
+                }
+            }
+            catch
+            {
+                inda.message = HttpUtility.UrlEncode("Sikertelen hitelesítés");
+            }
+            return RedirectToAction("index", inda);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

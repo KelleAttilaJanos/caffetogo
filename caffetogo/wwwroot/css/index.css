@@ -39,7 +39,6 @@ hr {
     margin-top: 4vh;
     margin-bottom: 20px;
 }
-
 @import url('https://fonts.googleapis.com/css?family=Exo:900');
 
 .movingBackground {
@@ -261,12 +260,11 @@ hr {
     font-size: 14px;
     height: auto;
     font-weight: normal;
-    padding: 14px 0;
+    padding: 15px 20px 15px 20px;
     text-transform: uppercase;
     border-color: bisque;
     color: bisque;
     border-radius: 15px;
-
     margin-left: 6vw;
 }
 

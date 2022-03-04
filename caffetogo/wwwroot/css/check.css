@@ -19,19 +19,6 @@
 body {
     position: relative;
     background-image: url("hatter.png");
-    background-size: 243px 215px;
-    animation: movimiento 3.5s linear infinite;
-}
-
-
-@keyframes movimiento {
-    0% {
-        background-position: 0 0;
-    }
-
-    100% {
-        background-position: 243px 215px;
-    }
 }
 
 .main {
