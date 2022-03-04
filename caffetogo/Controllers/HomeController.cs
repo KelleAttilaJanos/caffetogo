@@ -13,7 +13,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-
 namespace caffetogo.Controllers
 {
     public class HomeController : Controller
@@ -202,13 +201,10 @@ namespace caffetogo.Controllers
                     _db.SaveChanges();
                     ind.message = HttpUtility.UrlEncode("Köszönjük a vásárlást");
                 }
-
                 catch
                 {
                     ind.message = HttpUtility.UrlEncode("Hiba a kérés feldolgozásakor");
                 }
-
-
             }
             return RedirectToAction("Index", ind);
         }
@@ -357,8 +353,8 @@ namespace caffetogo.Controllers
                     {
                         email = reader.ReadToEnd();
                     }
-                    string to = values.Email; //To address    
-                    string from = "caffetogotest@gmail.com"; //From address    
+                    string to = values.Email;  
+                    string from = "caffetogotest@gmail.com";  
                     MailMessage message = new MailMessage(from, to);
                     MailBody = "<a href = 'https://localhost:44354/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
                     email = email.Replace("{link}", MailBody);
@@ -366,7 +362,7 @@ namespace caffetogo.Controllers
                     message.Body = email;
                     message.BodyEncoding = Encoding.UTF8;
                     message.IsBodyHtml = true;
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);    
                     System.Net.NetworkCredential basicCredential1 = new
                     System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
                     client.EnableSsl = true;
