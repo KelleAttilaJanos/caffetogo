@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="~/css/index.css">
     <link rel="icon" src="~/favicon.ico">
     <title>@ViewData["Title"]</title>
-
 </head>
 <body class="movingBackground">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -25,9 +24,9 @@
             if (Model.message != null)
             {
                 <text>
-                            $(window).on('load', function() {
-                            $('#alert').modal('show');
-                            });
+                                                            $(window).on('load', function() {
+                                                            $('#alert').modal('show');
+                                                            });
                 </text>
             }
         }
@@ -58,7 +57,10 @@
                         <h1>Cafe to go</h1>
                     </td>
                     <td id="hr3">
-                        <a id="but" asp-controller="Home" asp-action="Login">@HttpUtility.UrlDecode(@Model.Email)</a>
+                        <form method="post" role="form" style="display: block;">
+                        <input name="bucket" type="hidden" id="Cart2" />
+                        <input type="submit" id="but" asp-action="Login" value=@HttpUtility.UrlDecode(@Model.Email)/>
+                        </form>
                     </td>
                 </tr>
             </table>
@@ -70,29 +72,20 @@
                 <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
                     <div id="asd" class="card">
                         <!--container left-->
-
                     </div>
                 </div>
-
-
                 <!--container right-->
                 <div style="padding: 15px;" class="col-lg-8">
-
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-12">
-
                                 <div class="card-decks">
-
                                     <div class="card-group">
-
-
                                         <div class="row row-cols-1 row-cols-md-4">
                                             @foreach (Product item in Model.product)
                                             {
                                                 <div class="col mb-4">
                                                     <div class="card">
-
                                                         <img class="card-img-top" src="~/@item.item-.png" alt="@item.item-.png">
                                                         <div class="card-body">
                                                             <h5 class="card-title">@item.item</h5>
@@ -124,7 +117,19 @@
         </div>
     </main>
     <script type="text/javascript">
-                var list = []
+                var list = [];
+        @if (Model.cart != ""&&Model.cart!=null)
+        {
+            @foreach (string item in Model.cart.Split(','))
+            {
+                <text>
+                list.push(@(Convert.ToInt32(item)));
+                </text>
+            }
+            <text>
+            WriteOut()
+            </text>
+        }
                 function WriteOut()
                 {
                     var listnum=[]
@@ -156,15 +161,14 @@
         @foreach (Product item in @Model.product)
         {
             <text>
-                           namelist.push('@(item.item)');
-                           pricelist.push('@(item.price)');
-                           idlist.push('@(item.Id)');
+                                           namelist.push('@(item.item)');
+                                           pricelist.push('@(item.price)');
+                                           idlist.push('@(item.Id)');
             </text>
         }
                     var sum=0;
                     if(list.length>0)
                     {
-
                 for(let i=0;i<listitem.length;i++)
                 {
                 for(let j=0;j<idlist.length;j++)
@@ -190,7 +194,7 @@
             if (@Model.loggedin)
             {
                 <text>
-                                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
+                                                                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
                 </text>
             }
         }
@@ -206,12 +210,13 @@
                         text+=",";
                         text+=list[i];
                     }
+                    document.getElementById("Cart2").value=text;
         @{
             if (@Model.loggedin)
             {
                 <text>
-                            document.getElementById("Cart").value=text;
-                            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                                                            document.getElementById("Cart").value=text;
+                                                            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
                 </text>
             }
         }
@@ -237,12 +242,13 @@
                 text+=list[i];
                 }
                 }
+                document.getElementById("Cart2").value=text;
         @{
             if (@Model.loggedin)
             {
                 <text>
-                                    document.getElementById("Cart").value=text;
-                                    document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                                                                    document.getElementById("Cart").value=text;
+                                                                    document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
                 </text>
             }
         }

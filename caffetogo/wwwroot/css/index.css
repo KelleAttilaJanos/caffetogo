@@ -42,23 +42,11 @@ hr {
 @import url('https://fonts.googleapis.com/css?family=Exo:900');
 
 .movingBackground {
-    position:sticky;
     background-image: url("../coffe.png");
-    bottom:0;
-    background-repeat:repeat-x;
-    background-size: 1600px 817px;
-    animation: movimiento 10s linear infinite;
-}
-
-
-@keyframes movimiento {
-    0% {
-        background-position: 0 bottom;
-    }
-
-    100% {
-        background-position: 1600px bottom;
-    }
+    background-position:center bottom;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    background-size:cover;
 }
 @media screen {
     #loginbutton {

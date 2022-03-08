@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Login";
 }
+@model caffetogo.Models.Logins
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -36,8 +37,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <form id="login-form" method="post" role="form" style="display: block;">
+                                    <input type="hidden" name="cart" class="form-control" value=@Model.bucket>
+                                    <input type="hidden" name="bucket" class="form-control" value=@Model.bucket>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value="">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value=@Model.email>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Jelszó">
@@ -49,13 +52,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <input type="submit" id="forgottenpassword" asp-action="Forgottenpassword1" value="Elfelejtett jelszó-Email küldése">
+                                </div>
                             </form>
                             <form id="register-form"  method="post" role="form" style="display: none;">
                                 <div class="text-danger" ></div>
-                                <div class="form-group">
-                                   
-                                    <input  type="email" name="Email" id="email" tabindex="1" class="form-control"  placeholder="E-mail cím" value="">
-                                    
+                                    <input type="hidden" name="cart" class="form-control" value=@Model>
+                                <div class="form-group">                                 
+                                    <input  type="email" name="Email" id="email" tabindex="1" class="form-control"  placeholder="E-mail cím" value="">                                    
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="Password" id="password" required tabindex="3" class="form-control"  placeholder="Jelszó">

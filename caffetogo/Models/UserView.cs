@@ -13,5 +13,6 @@ namespace caffetogo.Models
         [Required]
         public string Password { get; set; }
         public DateTime Activity { get; set; }
+        public string cart { get; set; }
     }
 }

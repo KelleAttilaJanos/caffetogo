@@ -69,9 +69,6 @@
                         Email
                     </th>
                     <th>
-                        Password
-                    </th>
-                    <th>
                         Activity
                     </th>
                     <th>
@@ -89,9 +86,7 @@
                         <td>
                             <input name="Email" type="email" value=@item.Email>
                         </td>
-                        <td>
-                            <input name="Password" type="text" value=@item.Password>
-                        </td>
+                            <input  name="Password" type="hidden" value=@item.Password>
                         <td>
                             <input name="Activity" type="datetime-local" value=@item.Activity.ToString("yyyy-MM-ddTHH:mm")>
                         </td>

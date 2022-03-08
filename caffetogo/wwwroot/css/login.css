@@ -21,6 +21,14 @@ body {
     background-image: url("hatter.png");
 }
 
+#forgottenpassword {
+    border: none;
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+    color: bisque;
+}
+
 #privacy:link {
     color: bisque;
 }
@@ -36,6 +44,7 @@ body {
 #privacy:active {
     color: bisque;
 }
+
 @import url('https://fonts.googleapis.com/css?family=Exo:900');
 
 .panel-login {

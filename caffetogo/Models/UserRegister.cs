@@ -11,9 +11,6 @@ namespace caffetogo.Models
         public string Password { get; set; }
         [Required, PasswordPropertyText]
         public string confirmpassword { get; set; }
-
-
-
-
+        public string cart { get; set; }
     }
 }

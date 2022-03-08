@@ -8,6 +8,5 @@ namespace caffetogo.Controllers
         {
             return View();
         }
-
     }
 }

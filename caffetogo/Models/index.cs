@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 namespace caffetogo.Models
-
 {
     public class index
     {
@@ -9,6 +8,6 @@ namespace caffetogo.Models
         public bool loggedin { get; set; }
         public List<Product> product { get; set; }
         public string message { get; set; }
-
+        public string cart { get; set; }
     }
 }
