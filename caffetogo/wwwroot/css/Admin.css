@@ -1,6 +1,13 @@
 body{
     background-image: url("hatter.png");
 }
+p{
+    color: rgb(117, 50, 2);
+    margin:0px;
+    padding:0px;
+    border:0px;
+    font-weight:bold;
+}
 h1 {
     color: rgb(117, 50, 2);
 }

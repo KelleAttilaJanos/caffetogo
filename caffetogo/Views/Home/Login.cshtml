@@ -38,7 +38,6 @@
                         <div class="col-lg-12">
                             <form id="login-form" method="post" role="form" style="display: block;">
                                     <input type="hidden" name="cart" class="form-control" value=@Model.bucket>
-                                    <input type="hidden" name="bucket" class="form-control" value=@Model.bucket>
                                 <div class="form-group">
                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value=@Model.email>
                                 </div>
@@ -58,7 +57,7 @@
                             </form>
                             <form id="register-form"  method="post" role="form" style="display: none;">
                                 <div class="text-danger" ></div>
-                                    <input type="hidden" name="cart" class="form-control" value=@Model>
+                                    <input type="hidden" name="cart" class="form-control" value=@Model.bucket>
                                 <div class="form-group">                                 
                                     <input  type="email" name="Email" id="email" tabindex="1" class="form-control"  placeholder="E-mail cím" value="">                                    
                                 </div>

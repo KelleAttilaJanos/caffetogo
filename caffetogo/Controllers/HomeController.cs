@@ -48,7 +48,7 @@ namespace caffetogo.Controllers
         {
             return View(obj);
         }
-        public IActionResult Forgottenpassword(Logins log)
+        public IActionResult Forgottenpassword(Fpw log)
         {
             return View(log);
         }
@@ -346,7 +346,7 @@ namespace caffetogo.Controllers
                 string to = values.email;
                 string from = "caffetogotest@gmail.com";
                 MailMessage message = new MailMessage(from, to);
-                MailBody = "<a href = 'https://localhost:44354/Home/Forgottenpassword?email=" + values.email + "' > Új jelszó kérése </a>";
+                MailBody = "<a href = 'https://localhost:44354/Home/Forgottenpassword?id=" + _db.Users.Where(x => x.Email == values.email).FirstOrDefault().Id + "' > Új jelszó kérése </a>";
                 email = email.Replace("{link}", MailBody);
                 message.Subject = "Elfelejtett jelszó";
                 message.Body = email;
@@ -450,16 +450,15 @@ namespace caffetogo.Controllers
             }
         }
         [HttpPost]
-        public IActionResult UpdateUser([Bind(include: "Email,Password,confirmpassword")] UserRegister values)
+        public IActionResult UpdateUser([Bind(include: "id,password,confirmpassword")] Fpw values)
         {
             index ind = new index();
-            if (values.Password == values.confirmpassword)
+            if (values.password == values.confirmpassword)
             {
                 UserView obj = new UserView();
-                obj.Email = values.Email;
                 obj.Password = values.confirmpassword;
                 User user = Servicies.UserCreateConverter(obj);
-                User us = _db.Users.Where(x => x.Email == obj.Email).FirstOrDefault();
+                User us = _db.Users.Find(values.id);
                 us.Password = user.Password;
                 try
                 {

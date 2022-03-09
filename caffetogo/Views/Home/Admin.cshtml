@@ -81,7 +81,8 @@
                     <form method="post">
                     <tr>
                         <td>
-                            <input name="Id" type="number" value=@item.Id>
+                            <input name="Id" type="hidden" value=@item.Id>
+                            <p>@item.Id</p>
                         </td>
                         <td>
                             <input name="Email" type="email" value=@item.Email>
@@ -170,7 +171,8 @@
                     <form method="post">
                     <tr>
                         <td>
-                            <input name="Id" type="number" value=@item.Id>
+                            <input name="Id" type="hidden" value=@item.Id>
+                            <p>@item.Id</p>
                         </td>
                         <td>
                             <input name="item" type="text" value=@item.item>
@@ -253,7 +255,8 @@
                     <form method="post">
                     <tr>
                         <td>
-                            <input name="Id" type="number" value=@item.Id>
+                            <input name="Id" type="hidden" value=@item.Id>
+                            <p>@item.Id</p>
                         </td>
                         <td>
                             <input name="UserId" type="text" value=@item.UserId>
