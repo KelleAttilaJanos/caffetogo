@@ -8,19 +8,16 @@
     color: bisque;
     background-color: rgb(117, 50, 2);
 }
-
 #modalpicture {
     width: 500px;
     height: 500px;
     place-self: center;
 }
 @import url('https://fonts.googleapis.com/css?family=Exo:900');
-
 body {
     position: relative;
     background-image: url("hatter.png");
 }
-
 .main {
     background-color: bisque;
     border-radius: 3vh;
@@ -28,30 +25,24 @@ body {
     width: 80%;
     padding: 2vh;
 }
-
 #collection {
     padding-top: 10vh;
 }
-
 img {
     width: 25vh;
     height: 25vh;
 }
-
 p {
     font-size: 2vh;
     color: rgb(117, 50, 2);
     font-weight: bold;
 }
-
 .left {
     width: 10%;
 }
-
 .right {
     width: 10%;
 }
-
 .btn {
     background-color: rgb(117, 50, 2);
     outline: none;
@@ -65,65 +56,54 @@ p {
     color: bisque;
     border-radius: 1vh;
 }
-
-    .btn:hover,
-    .btn:focus {
-        color: rgb(117, 50, 2);
-        background-color: bisque;
-        border-color: rgb(117, 50, 2);
-    }
-
+.btn:hover,
+.btn:focus {
+    color: rgb(117, 50, 2);
+    background-color: bisque;
+    border-color: rgb(117, 50, 2);
+}
+/*csúszka*/
 ::-webkit-scrollbar {
     width: 1.3vh;
 }
-
 ::-webkit-scrollbar-track {
     background: bisque;
 }
-
 ::-webkit-scrollbar-thumb {
     background: rgb(117, 50, 2);
     border-radius: 0.9vh;
 }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: bisque;
-    }
-
+::-webkit-scrollbar-thumb:hover {
+    background: bisque;
+}
 ::-webkit-scrollbar-track:hover {
     background: rgb(117, 50, 2);
 }
-
+/*nyomtatási kép*/
 @media print {
     body {
         background-image: none;
     }
-
     .main {
         background-color: none;
         border: none;
         width: 100%;
         padding: 0vh;
     }
-
     #collection {
         padding-top: 0vh;
     }
-
     p {
         font-size: 2vh;
         color: black;
         font-weight: normal;
     }
-
     .left {
         width: 0%;
     }
-
     .right {
         width: 0%;
     }
-
     .btn {
         background-color: transparent;
         font-size: 0vh;
@@ -134,7 +114,6 @@ p {
         color: transparent;
         border-radius: 0vh;
     }
-
     .btn:hover,
     .btn:focus {
         color: transparent;

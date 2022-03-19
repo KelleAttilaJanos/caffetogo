@@ -47,6 +47,7 @@ th,.sendlink{
     font-weight: bold;
     border-radius: 30px;
 }
+/*fejléc*/
 .headlink {
 	background-color: rgb(117, 50, 2);
 	border-color: bisque;
@@ -64,19 +65,20 @@ th,.sendlink{
 	background-color: bisque;
 	border: 2px solid rgb(117, 50, 2);
 }
- ::-webkit-scrollbar {
+/*csúszka*/
+::-webkit-scrollbar {
     width: 2vh;
   }
-  ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: bisque;
 }
 ::-webkit-scrollbar-thumb {
     background: rgb(117, 50, 2);
     border-radius: 0.9vh;
   }
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: bisque;
   } 
-  ::-webkit-scrollbar-track:hover{
+::-webkit-scrollbar-track:hover{
     background: rgb(117, 50, 2);
   }

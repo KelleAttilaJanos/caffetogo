@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Belépés";
 }
 @model caffetogo.Models.Logins
 <!DOCTYPE html>
@@ -17,7 +17,6 @@
 <body class='movingBackground'>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="false"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -36,13 +35,14 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
+                            @*Bejelentkezés (Loginok fügvény)*@
                             <form id="login-form" method="post" role="form" style="display: block;">
                                     <input type="hidden" name="cart" class="form-control" value=@Model.bucket>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="E-mail cím" value=@Model.email>
+                                    <input type="email" name="email" tabindex="1" class="form-control" placeholder="E-mail cím" value=@Model.email>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Jelszó">
+                                    <input type="password" name="password" tabindex="2" class="form-control" placeholder="Jelszó">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -52,20 +52,22 @@
                                     </div>
                                 </div>
                                 <div>
+                                    @*Ellfelejtett jelszó (Forgottenpassword1 fügvény)*@
                                     <input type="submit" id="forgottenpassword" asp-action="Forgottenpassword1" value="Elfelejtett jelszó-Email küldése">
                                 </div>
                             </form>
+                            @*Regisztráció (CreateUser fügvény)*@
                             <form id="register-form"  method="post" role="form" style="display: none;">
                                 <div class="text-danger" ></div>
                                     <input type="hidden" name="cart" class="form-control" value=@Model.bucket>
                                 <div class="form-group">                                 
-                                    <input  type="email" name="Email" id="email" tabindex="1" class="form-control"  placeholder="E-mail cím" value="">                                    
+                                    <input  type="email" name="Email"  tabindex="1" class="form-control"  placeholder="E-mail cím" value="">                                    
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="Password" id="password" required tabindex="3" class="form-control"  placeholder="Jelszó">
+                                    <input type="password" name="Password"  required tabindex="3" class="form-control"  placeholder="Jelszó">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="confirmpassword" id="confirm-password" required tabindex="4" class="form-control"  placeholder="Jelszó újra">
+                                    <input type="password" name="confirmpassword"  required tabindex="4" class="form-control"  placeholder="Jelszó újra">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -75,6 +77,7 @@
                                     </div>
                                 </div>
                             </form>
+                            @*Ugrás a Privacy oldalra*@
                             <a id="privacy" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
                         </div>
                     </div>

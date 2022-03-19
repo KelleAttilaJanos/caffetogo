@@ -1,7 +1,7 @@
-﻿@{
+﻿@model caffetogo.Models.Check
+@{
     ViewData["Title"] = "Check";
 }
-@model caffetogo.Models.Check
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -17,20 +17,20 @@
 <body class='movingBackground'>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript">
+        @*Hibaüzenet kiiratása*@
         @{
             if (Model.message != null)
             {
                 <text>
-                                        $(window).on('load', function() {
-                                            $('#alert').modal('show');
-                                        });
+                     $(window).on('load', function() {
+                     $('#alert').modal('show');
+                     });
                 </text>
-
             }
         }
     </script>
+    @*Hibaüzenet*@
     <div class="modal" id="alert" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -48,17 +48,18 @@
     </div>
     <script type="text/javascript">
         const list = [];
+        @*A kosár tartalmának kiiratása*@
         function WriteOut()
         {
-        @{
-            foreach (string item in Model.Cart.Split(','))
-            {
-                <text>
-                            list.push(@Convert.ToInt32(item));
-                </text>
+            @{
+                foreach (string item in Model.Cart.Split(','))
+                {
+                    <text>
+                        list.push(@Convert.ToInt32(item));
+                    </text>
+                }
             }
-        }
-            console.log(list[0]);
+            @*A kapott kosár rendszerezése*@
             var listnum=[]
             var listitem=[]
             for(let i=0;i<list.length;i++)
@@ -85,15 +86,17 @@
             const namelist=[];
             const pricelist=[];
             const idlist=[];
-        @foreach (Product item in @Model.Products)
-        {
-            <text>
-                                                     namelist.push('@(item.item)');
-                                                     pricelist.push('@(item.price)');
-                                                     idlist.push('@(item.Id)');
-            </text>
-        }
+            @*A termékek adatainak behívása*@
+            @foreach (Product item in @Model.Products)
+            {
+                <text>
+                     namelist.push('@(item.item.Replace('_',' '))');
+                     pricelist.push('@(item.price)');
+                     idlist.push('@(item.Id)');
+                </text>
+            }
             var sum=0;
+            @*Htmlbe kiirás*@
             if(list.length>0)
             {
                 for(let i=0;i<listitem.length;i++)
@@ -107,12 +110,13 @@
                         }
                     }
                 }
-            document.getElementById("asd").innerHTML+='<p>Összesen: '+sum+" Ft</p>";
+                document.getElementById("asd").innerHTML+='<p>Összesen: '+sum+" Ft</p>";
             }
         }
     </script>
     <div class="container-fluid" id="collection">
         <div class="row">
+            @*Funkciógombok*@
             <div class="left">
                 <button class="btn" onclick="window.print()">Nyomtatás</button>
                 <form method="post" asp-antiforgery="true" asp-action="CreateBuy">
@@ -121,6 +125,7 @@
                     <input type="submit" class="btn" value="Fizetés">
                 </form>
             </div>
+            @*Összegzés*@
             <div class="main">
                 <img src="~/logo.png">
                 <div id="asd">

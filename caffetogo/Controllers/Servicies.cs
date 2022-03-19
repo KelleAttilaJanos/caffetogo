@@ -5,8 +5,15 @@ using System.Security.Cryptography;
 
 namespace caffetogo.Controllers
 {
+    /// <summary>
+    /// Ez a class felel a típuskonvertáló methódusokért
+    /// </summary>
     public class Servicies
     {
+        /// <summary>
+        /// A felhasználó tábla adatait alakítja az Admin oldal számára szükséges adathalmazzá
+        /// </summary>
+        /// <param name="user">Felhasználók adatai</param>
         public static IEnumerable<UserView> UserConverter(IEnumerable<User> user)
         {
             List<UserView> userview = new List<UserView>();
@@ -18,6 +25,7 @@ namespace caffetogo.Controllers
                 userviewobj.Activity = item.Activity;
                 try
                 {
+                    //dekódolás(titkosítás)
                     using (Aes aesAlg = Aes.Create())
                     {
                         aesAlg.Key = new byte[] { 24, 85, 236, 168, 68, 66, 17, 60, 1, 67, 106, 129, 239, 131, 175, 181, 161, 191, 160, 95, 253, 231, 237, 137, 131, 176, 189, 172, 166, 210, 43, 82 };
@@ -44,12 +52,17 @@ namespace caffetogo.Controllers
             IEnumerable<UserView> users = userview;
             return users;
         }
+        /// <summary>
+        /// Egy felhasználó beküldött adatait átalakítja az adatbázisban alkalmazott formára
+        /// </summary>
+        /// <param name="userviewobj">A beküldött Viewmodel</param>
         public static User UserCreateConverter(UserView userviewobj)
         {
             User user = new User();
             user.Id = userviewobj.Id;
             user.Email = userviewobj.Email;
             user.Activity = userviewobj.Activity;
+            //kódolás(titkosítás)
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = new byte[] { 24, 85, 236, 168, 68, 66, 17, 60, 1, 67, 106, 129, 239, 131, 175, 181, 161, 191, 160, 95, 253, 231, 237, 137, 131, 176, 189, 172, 166, 210, 43, 82 };
@@ -69,6 +82,10 @@ namespace caffetogo.Controllers
             }
             return user;
         }
+        /// <summary>
+        /// Egy termék beküldött adatait átalakítja az adatbázisban alkalmazott formára
+        /// </summary>
+        /// <param name="productView">Viewmodel</param>
         public static Product ProductCreateConverter(ProductView productView)
         {
             Product product = new Product();

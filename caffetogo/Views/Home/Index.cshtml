@@ -17,20 +17,21 @@
 <body class="movingBackground">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        @*Hibaüzenet kiiratása*@
         @{
             if (Model.message != null)
             {
                 <text>
-                                                            $(window).on('load', function() {
-                                                            $('#alert').modal('show');
-                                                            });
+                    $(window).on('load', function() {
+                    $('#alert').modal('show');
+                    });
                 </text>
             }
         }
     </script>
+    @*Hibaüzenet*@
     <div class="modal" id="alert" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -46,6 +47,7 @@
             </div>
         </div>
     </div>
+    @*Fejléc*@
     <header>
         <div class="header">
             <table class="headtable">
@@ -57,6 +59,7 @@
                         <h1>Cafe to go</h1>
                     </td>
                     <td id="hr3">
+                        @*Adatok küldése a Login oldalra*@
                         <form method="post" role="form" style="display: block;">
                         <input name="bucket" type="hidden" id="Cart2" />
                         <input type="submit" id="but" asp-action="Login" value=@HttpUtility.UrlDecode(@Model.Email)/>
@@ -69,12 +72,12 @@
     <main>
         <div class="container-fluid">
             <div class="row">
+                @*A bal oldali lista*@
                 <div style="border-right: 5px solid rgb(255, 136, 0); height:auto;" class="col-lg-4">
                     <div id="asd" class="card">
-                        <!--container left-->
                     </div>
                 </div>
-                <!--container right-->
+                @*A jobb oldali termékmegjelenítő*@
                 <div style="padding: 15px;" class="col-lg-8">
                     <div class="container-fluid">
                         <div class="row">
@@ -82,17 +85,19 @@
                                 <div class="card-decks">
                                     <div class="card-group">
                                         <div class="row row-cols-1 row-cols-md-4">
+                                            @*Termékkártyák kiiratása*@
                                             @foreach (Product item in Model.product)
                                             {
                                                 <div class="col mb-4">
                                                     <div class="card">
                                                         <img class="card-img-top" src="~/@item.item-.png" alt="@item.item-.png">
                                                         <div class="card-body">
-                                                            <h5 class="card-title">@item.item</h5>
+                                                            <h5 class="card-title">@item.item.Replace('_',' ')</h5>
                                                             <p class="card-text">@item.price Ft</p>
                                                             <p class="card-text">
                                                                 <table id="card-table">
                                                                     <tr>
+                                                                        @*Funkció gombok*@
                                                                         <td>
                                                                             <button onclick="AddToCart(@item.Id)" id="card-button">+</button>
                                                                         </td>
@@ -117,7 +122,7 @@
         </div>
     </main>
     <script type="text/javascript">
-                var list = [];
+        var list = [];
         @if (Model.cart != ""&&Model.cart!=null)
         {
             @foreach (string item in Model.cart.Split(','))
@@ -130,129 +135,137 @@
             WriteOut()
             </text>
         }
-                function WriteOut()
+        @*A lista kiiratását végző fügvény*@
+        function WriteOut()
+        {
+            var listnum=[]
+            var listitem=[]
+            @*A lista tartalmának rendszerezése*@
+            for(let i=0;i<list.length;i++)
+            {
+                var check=false;
+                if(listitem.length>0)
                 {
-                    var listnum=[]
-                    var listitem=[]
-                    for(let i=0;i<list.length;i++)
+                    for(let j=0;j<listitem.length;j++)
                     {
-                        var check=false;
-                        if(listitem.length>0)
+                        if(list[i]==listitem[j])
                         {
-                            for(let j=0;j<listitem.length;j++)
-                            {
-                                if(list[i]==listitem[j])
-                                {
-                                    listnum[j]++;
-                                    check=true;
-                                }
-                            }
-                        }
-                        if(check==false)
-                        {
-                            listitem.push(list[i]);
-                            listnum.push(1);
+                            listnum[j]++;
+                            check=true;
                         }
                     }
-                    document.getElementById("asd").innerHTML="";
-                    const namelist=[];
-                    const pricelist=[];
-                    const idlist=[];
-        @foreach (Product item in @Model.product)
-        {
-            <text>
-                                           namelist.push('@(item.item)');
-                                           pricelist.push('@(item.price)');
-                                           idlist.push('@(item.Id)');
-            </text>
-        }
-                    var sum=0;
-                    if(list.length>0)
-                    {
+                }
+                if(check==false)
+                {
+                    listitem.push(list[i]);
+                    listnum.push(1);
+                }
+            }
+            document.getElementById("asd").innerHTML="";
+            const namelist=[];
+            const pricelist=[];
+            const idlist=[];
+            @*A termékek adatainak behívása*@
+            @foreach (Product item in @Model.product)
+            {
+                <text>
+                    namelist.push('@(item.item.Replace('_',' '))');
+                    pricelist.push('@(item.price)');
+                    idlist.push('@(item.Id)');
+                </text>
+            }
+            var sum=0;
+            @*Htmlbe iratás*@
+            if(list.length>0)
+            {
                 for(let i=0;i<listitem.length;i++)
                 {
-                for(let j=0;j<idlist.length;j++)
-                {
-                if(listitem[i]==idlist[j])
-                {
-                if(sum==0)
-                {
-                sum+=listnum[i]*pricelist[j];
-                document.getElementById("asd").innerHTML+="<p></p><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
-                }
-                else
-                {
-                sum+=listnum[i]*pricelist[j];
-                document.getElementById("asd").innerHTML+="<hr><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
-                }
-                }
-                }
+                    for(let j=0;j<idlist.length;j++)
+                    {
+                        if(listitem[i]==idlist[j])
+                        {
+                            if(sum==0)
+                            {
+                                sum+=listnum[i]*pricelist[j];
+                                document.getElementById("asd").innerHTML+="<p></p><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+                            }
+                            else
+                            {
+                                sum+=listnum[i]*pricelist[j];
+                                document.getElementById("asd").innerHTML+="<hr><p id='gen'>"+listnum[i]+" db "+namelist[j]+" "+listnum[i]*pricelist[j]+" Ft</p>";
+                            }
+                        }
+                    }
                 }
                 document.getElementById("asd").innerHTML+='<hr id="boldline"><p id="gensum">Összesen: '+sum+" Ft</p>";
+            }
+            @*Fizetés gomb meghívása (ugrás a Check oldalra)*@
+            @{
+                if (@Model.loggedin)
+                {
+                    <text>
+                    document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
+                    </text>
                 }
-        @{
-            if (@Model.loggedin)
-            {
-                <text>
-                                                                 document.getElementById("asd").innerHTML+='<form asp-antiforgery="true" method="post" asp-action="Check" enctype="multipart/form-data"><input name="Cart" id="Cart" type="hidden"><input name="Id" id="Id" type="hidden"><input name="Email" type="hidden" value="@HttpUtility.UrlDecode(@Model.Email)"><input type="submit" id="thebutton" value="Fizetés"></form>'
-                </text>
             }
         }
-                }
-                function AddToCart(id)
-                {
-                    var text="";
-                    list.push(Number(id));
-                    WriteOut();
-                    text+=list[0];
-                    for(let i=1;i<list.length;i++)
-                    {
-                        text+=",";
-                        text+=list[i];
-                    }
-                    document.getElementById("Cart2").value=text;
-        @{
-            if (@Model.loggedin)
+        @*Kosárhoz adás fügvény (A termék azonosítóját hozzáadja a listához)*@
+        function AddToCart(id)
+        {
+            var text="";
+            list.push(Number(id));
+            WriteOut();
+            text+=list[0];
+            for(let i=1;i<list.length;i++)
             {
-                <text>
-                                                            document.getElementById("Cart").value=text;
-                                                            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
-                </text>
+                text+=",";
+                text+=list[i];
+            }
+            document.getElementById("Cart2").value=text;
+            @{
+                if (@Model.loggedin)
+                {
+                    <text>
+                        document.getElementById("Cart").value=text;
+                        document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                    </text>
+                }
             }
         }
-                }
-                function RemoveFromCart(id)
+        @*Kosárból elvesz fügvény (A termék azonosítóját kiveszi a listából)*@
+        function RemoveFromCart(id)
+        {
+            var igen=false;
+            for (let i = 0; i < list.length; i++)
+            {
+                if (list[i] == Number(id) && igen==false)
                 {
-                var igen=false;
-                for (let i = 0; i < list.length; i++)
-                {
-                if (list[i] == Number(id) && igen==false) {
-                list.splice(i,1)
-                igen=true;
+                    list.splice(i,1)
+                    igen=true;
                 }
-                }
-                WriteOut();
-                var text="";
-                if(list.length>0)
-                {
+            }
+            WriteOut();
+            var text="";
+            if(list.length>0)
+            {
                 text+=list[0];
                 for(let i=1;i<list.length;i++)
                 {
-                text+=",";
-                text+=list[i];
+                    text+=",";
+                    text+=list[i];
                 }
+            }
+            document.getElementById("Cart2").value=text;
+            @{
+                if (@Model.loggedin)
+                {
+                    <text>
+                        document.getElementById("Cart").value=text;
+                        document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
+                    </text>
                 }
-                document.getElementById("Cart2").value=text;
-        @{
-            if (@Model.loggedin)
-            {
-                <text>
-                                                                    document.getElementById("Cart").value=text;
-                                                                    document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
-                </text>
             }
         }
-                }
     </script>
 </body>
 </html>
