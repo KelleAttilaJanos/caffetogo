@@ -52,12 +52,15 @@
         function WriteOut()
         {
             @{
-                foreach (string item in Model.Cart.Split(','))
+                if(Model.Cart!="" && Model.Cart!=null)
                 {
-                    <text>
-                        list.push(@Convert.ToInt32(item));
-                    </text>
-                }
+                    foreach (string item in Model.Cart.Split(','))
+                    {
+                        <text>
+                          list.push(@Convert.ToInt32(item));
+                        </text>
+                    }
+                }               
             }
             @*A kapott kosár rendszerezése*@
             var listnum=[]

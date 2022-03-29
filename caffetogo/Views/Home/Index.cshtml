@@ -133,6 +133,8 @@
             }
             <text>
             WriteOut()
+            document.getElementById("Cart").value=@Model.cart;
+            document.getElementById("Id").value=@Convert.ToInt32(HttpUtility.UrlDecode(@Model.id));
             </text>
         }
         @*A lista kiiratását végző fügvény*@

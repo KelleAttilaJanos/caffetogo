@@ -138,7 +138,7 @@ namespace caffetogo.Controllers
                     string to = values.Email;
                     string from = "caffetogotest@gmail.com";
                     MailMessage message = new MailMessage(from, to);
-                    MailBody = "<a href = 'https://localhost:44354/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
+                    MailBody = "<a href = 'https://" + Url.ActionContext.HttpContext.Request.Host.ToString() + "/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
                     email = email.Replace("{link}", MailBody);
                     message.Subject = "Regisztráció hitelesítése";
                     message.Body = email;
@@ -196,7 +196,7 @@ namespace caffetogo.Controllers
                 string to = values.email;
                 string from = "caffetogotest@gmail.com";
                 MailMessage message = new MailMessage(from, to);
-                MailBody = "<a href = 'https://localhost:44354/Home/Forgottenpassword?id=" + _db.Users.Where(x => x.Email == values.email).FirstOrDefault().Id + "' > Új jelszó kérése </a>";
+                MailBody = "<a href = 'https://" + Url.ActionContext.HttpContext.Request.Host.ToString() + "/Home/Forgottenpassword?id=" + _db.Users.Where(x => x.Email == values.email).FirstOrDefault().Id + "' > Új jelszó kérése </a>";
                 email = email.Replace("{link}", MailBody);
                 message.Subject = "Elfelejtett jelszó";
                 message.Body = email;
@@ -391,32 +391,39 @@ namespace caffetogo.Controllers
                         }
                     }
                 }
-                MailBody += "<hr>";
-                //Végösszeg
-                MailBody += "<p>Összesen " + summa + " Ft</p>";
-                email = email.Replace("{bod}", MailBody);
-                string to = _db.Users.Where(x => x.Id == values.UserId).Select(x => x.Email).SingleOrDefault();
-                string from = "caffetogotest@gmail.com";
-                MailMessage message = new MailMessage(from, to);
-                message.Subject = "Sikeres Rendelés";
-                message.Body = email;
-                message.BodyEncoding = Encoding.UTF8;
-                message.IsBodyHtml = true;
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                System.Net.NetworkCredential basicCredential1 = new
-                System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
-                client.EnableSsl = true;
-                client.UseDefaultCredentials = false;
-                client.Credentials = basicCredential1;
-                //Email küldése és rendelés elmentése
-                try
+                if (_db.Users.Any(x => x.Id == values.UserId))
                 {
-                    client.Send(message);
-                    _db.Buy.Add(values);
-                    _db.SaveChanges();
-                    ind.message = HttpUtility.UrlEncode("Köszönjük a vásárlást");
+                    MailBody += "<hr>";
+                    //Végösszeg
+                    MailBody += "<p>Összesen " + summa + " Ft</p>";
+                    email = email.Replace("{bod}", MailBody);
+                    string to = _db.Users.Where(x => x.Id == values.UserId).Select(x => x.Email).SingleOrDefault();
+                    string from = "caffetogotest@gmail.com";
+                    MailMessage message = new MailMessage(from, to);
+                    message.Subject = "Sikeres Rendelés";
+                    message.Body = email;
+                    message.BodyEncoding = Encoding.UTF8;
+                    message.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                    System.Net.NetworkCredential basicCredential1 = new
+                    System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
+                    client.EnableSsl = true;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = basicCredential1;
+                    //Email küldése és rendelés elmentése
+                    try
+                    {
+                        client.Send(message);
+                        _db.Buy.Add(values);
+                        _db.SaveChanges();
+                        ind.message = HttpUtility.UrlEncode("Köszönjük a vásárlást");
+                    }
+                    catch
+                    {
+                        ind.message = HttpUtility.UrlEncode("Hiba a kérés feldolgozásakor");
+                    }
                 }
-                catch
+                else
                 {
                     ind.message = HttpUtility.UrlEncode("Hiba a kérés feldolgozásakor");
                 }
