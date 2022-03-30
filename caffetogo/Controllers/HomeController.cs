@@ -125,52 +125,62 @@ namespace caffetogo.Controllers
             }
             else
             {
-                //A Jelszó és a Jelszó ismét egyezésének vizsgálata
-                if (values.Password == values.confirmpassword)
+                if (values.Email!=null&&values.Email!="")
                 {
-                    //Email készítés
-                    string MailBody = "";
-                    string email = "";
-                    using (StreamReader reader = new StreamReader(webHost.WebRootPath + @"\confirm.html"))
+                    //A Jelszó és a Jelszó ismét egyezésének vizsgálata
+                    if (values.Password == values.confirmpassword)
                     {
-                        email = reader.ReadToEnd();
+                        //Email készítés
+                        string MailBody = "";
+                        string email = "";
+                        using (StreamReader reader = new StreamReader(webHost.WebRootPath + @"\confirm.html"))
+                        {
+                            email = reader.ReadToEnd();
+                        }
+                        string to = values.Email;
+                        string from = "caffetogotest@gmail.com";
+                        MailMessage message = new MailMessage(from, to);
+                        MailBody = "<a href = 'https://" + Url.ActionContext.HttpContext.Request.Host.ToString() + "/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
+                        email = email.Replace("{link}", MailBody);
+                        message.Subject = "Regisztráció hitelesítése";
+                        message.Body = email;
+                        message.BodyEncoding = Encoding.UTF8;
+                        message.IsBodyHtml = true;
+                        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                        System.Net.NetworkCredential basicCredential1 = new
+                        System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
+                        client.EnableSsl = true;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = basicCredential1;
+                        //Email küldés
+                        try
+                        {
+                            client.Send(message);
+                            index inda = new index();
+                            inda.message = HttpUtility.UrlEncode("Kérjük hitelesítse regisztrációját");
+                            inda.cart = values.cart;
+                            return RedirectToAction("index", inda);
+                        }
+                        catch
+                        {
+                            index inde = new index();
+                            inde.message = HttpUtility.UrlEncode("A felhasználó létrehozása sikertelen");
+                            inde.cart = values.cart;
+                            return RedirectToAction("index", inde);
+                        }
                     }
-                    string to = values.Email;
-                    string from = "caffetogotest@gmail.com";
-                    MailMessage message = new MailMessage(from, to);
-                    MailBody = "<a href = 'https://" + Url.ActionContext.HttpContext.Request.Host.ToString() + "/Home/Confirm?Email=" + values.Email + "&Password=" + values.Password + "' > megerősítő link </a>";
-                    email = email.Replace("{link}", MailBody);
-                    message.Subject = "Regisztráció hitelesítése";
-                    message.Body = email;
-                    message.BodyEncoding = Encoding.UTF8;
-                    message.IsBodyHtml = true;
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                    System.Net.NetworkCredential basicCredential1 = new
-                    System.Net.NetworkCredential("caffetogotest@gmail.com", "210d7730");
-                    client.EnableSsl = true;
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = basicCredential1;
-                    //Email küldés
-                    try
+                    else
                     {
-                        client.Send(message);
-                        index inda = new index();
-                        inda.message = HttpUtility.UrlEncode("Kérjük hitelesítse regisztrációját");
-                        inda.cart = values.cart;
-                        return RedirectToAction("index", inda);
-                    }
-                    catch
-                    {
-                        index inde = new index();
-                        inde.message = HttpUtility.UrlEncode("A felhasználó létrehozása sikertelen");
-                        inde.cart = values.cart;
-                        return RedirectToAction("index", inde);
+                        index indb = new index();
+                        indb.message = HttpUtility.UrlEncode("A jelszavak nem egyeznek");
+                        indb.cart = values.cart;
+                        return RedirectToAction("index", indb);
                     }
                 }
                 else
                 {
                     index indb = new index();
-                    indb.message = HttpUtility.UrlEncode("A jelszavak nem egyeznek");
+                    indb.message = HttpUtility.UrlEncode("Kitöltetlen mező");
                     indb.cart = values.cart;
                     return RedirectToAction("index", indb);
                 }
